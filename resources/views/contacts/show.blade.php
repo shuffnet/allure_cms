@@ -9,6 +9,18 @@
             <p class="lead">{{$contact->lname}}</p>
             <p class="lead">{{$contact->email}}</p>
 
+            <hr>
+            <div>
+                @foreach($contact->contact_type as $type)
+
+                    <span class="label label-default">{{$type->type}}</span>
+
+
+                @endforeach
+
+
+            </div>
+
 
 
         </div>

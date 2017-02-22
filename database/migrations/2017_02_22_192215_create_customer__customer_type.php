@@ -32,5 +32,6 @@ class CreateCustomerCustomerType extends Migration
     public function down()
     {
         //
+        Schema::drop('contact_contacType');
     }
 }

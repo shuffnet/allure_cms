@@ -47,7 +47,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
-        dd($request);
+
 
         //Validate the data
         $this->validate($request, array(
@@ -67,7 +67,7 @@ class ContactController extends Controller
         $contact->email = $request->email;
 
         $contact->save();
-        $contact->contact_types()->sync($request->contact_type, false);
+        $contact->contact_type()->sync($request->contact_type, false);
 
         Session::flash('success', 'The Contact was successfully saved!');
         return redirect()->route('contacts.show', $contact->id);
@@ -93,6 +93,7 @@ class ContactController extends Controller
         //
         $contact = Contact::find($id);
         return view('contacts.show')->with('contact', $contact);
+
     }
 
     /**
