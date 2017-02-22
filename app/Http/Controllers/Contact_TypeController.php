@@ -18,7 +18,11 @@ class Contact_TypeController extends Controller
     public function index()
     {
         //
-        return view('contact_types/index');
+        $contact_types = Contact_Type::all();
+        return view('contact_types.index')->with('contact_types',$contact_types);
+
+
+
     }
 
     /**
@@ -42,7 +46,7 @@ class Contact_TypeController extends Controller
 
         //Validate the data
         $this->validate($request, [
-            'type' => 'required|unique:contact_type|max:255',
+            'type' => 'required|unique:contact_types|max:255',
 
         ]);
 
@@ -83,6 +87,9 @@ class Contact_TypeController extends Controller
     public function edit($id)
     {
         //
+
+        $contact_type = Contact_Type::find($id);
+        return view('contact_types.edit')->with('contact_type',$contact_type);
     }
 
     /**
@@ -94,7 +101,30 @@ class Contact_TypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        //validate data
+
+        $this->validate($request, array(
+
+            'type' => 'required|unique:contact_types|max:255',
+
+
+        ));
+        //save date to database
+
+        $contact_type = Contact_Type::find($id);
+
+        $contact_type->type = $request->input('type');
+
+        $contact_type->save();
+
+
+        //set flash message
+
+        Session::flash('success', 'Contacted was updated');
+        //redirect with flash date to show
+
+
+        return redirect()->route('contact_types.index');
     }
 
     /**

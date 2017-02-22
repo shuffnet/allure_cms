@@ -12,10 +12,11 @@ class CreateContactTypesTable extends Migration
      */
     public function up()
     {
-        Schema::create('contact__types', function (Blueprint $table) {
+        Schema::create('contact_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
             $table->timestamps();
+
         });
     }
 

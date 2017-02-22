@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact_Type;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -32,7 +33,9 @@ class ContactController extends Controller
     public function create()
     {
         //
-        return view('contacts.create');
+        $contact_types = Contact_Type::all();
+
+        return view('contacts.create')->withContact_types($contact_types);
     }
 
     /**
@@ -44,6 +47,7 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
+        dd($request);
 
         //Validate the data
         $this->validate($request, array(
@@ -63,6 +67,7 @@ class ContactController extends Controller
         $contact->email = $request->email;
 
         $contact->save();
+        $contact->contact_types()->sync($request->contact_type, false);
 
         Session::flash('success', 'The Contact was successfully saved!');
         return redirect()->route('contacts.show', $contact->id);
