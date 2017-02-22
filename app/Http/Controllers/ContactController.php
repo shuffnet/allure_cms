@@ -106,8 +106,16 @@ class ContactController extends Controller
     {
         //
         $contact = Contact::find($id);
+        $contact_types = Contact_Type::all();
+        $contact_type = array();
+        foreach ($contact_types as $type){
+            $contact_type[$type->id] = $type->type;
 
-        return view('contacts.edit')->withContact($contact);
+        }
+
+
+
+        return view('contacts.edit')->withContact($contact)->withContact_type($contact_type);
         //or return view('job.edit')->with('job',$job);
     }
 
@@ -129,14 +137,16 @@ class ContactController extends Controller
             'email' => 'required|max:255|email'
 
         ));
-        //save date to database
+        //save data to database
 
-        $job = Job::find($id);
+        $contact = Contact::find($id);
 
-        $job->job_type_id = $request->input('job_type_id');
-        $job->name = $request->input('name');
-        $job->description = $request->input('description');
-        $job->save();
+        $contact->fname = $request->input('fname');
+        $contact->lname = $request->input('lname');
+        $contact->email = $request->input('email');
+        $contact->save();
+        $contact->contact_type()->sync($request->contact_type);
+        return redirect()->route('contacts.show', $contact->id);
     }
 
     /**

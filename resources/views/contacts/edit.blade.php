@@ -14,6 +14,8 @@
             {{Form::text('lname', null, array('class'=> 'form-control'))}}
             {{Form::label('email','Email:')}}
             {{Form::textarea('email', null, array('class'=> 'form-control'))}}
+            {{Form::label('contact_types', 'Types:')}}
+            {{Form::select('contact_type[]', $contact_type, null, ['class'=>"js-example-basic-multiple form-control ", 'multiple'=>"multiple"])}}
             <div class="row">
                 <a href="{{ route('contacts.show',$contact->id)}}" class="btn btn-danger col-md-6">Cancel</a>
                 {{Form::submit('Update', array('class'=> 'btn btn-success  col-md-6'))}}
@@ -23,4 +25,11 @@
         </div>
     </div>
 
+@endsection
+
+@section('java')
+    <script type="text/javascript">
+        $(".js-example-basic-multiple").select2();
+        $(".js-example-basic-multiple").val({!! json_encode( $contact->contact_type()->getRelatedIds()) !!}).trigger('change');
+    </script>
 @endsection
