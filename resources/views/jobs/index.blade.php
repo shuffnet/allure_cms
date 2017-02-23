@@ -28,7 +28,10 @@ use Carbon\Carbon;
                 <tbody>
                     @foreach($jobs as $job)
                         <tr>
-                            {{$jobDate = new Carbon($job->date)}}
+
+                            <?php
+                            $jobDate = new Carbon($job->date)
+                            ?>
 
                             <th>{{$job->id}}</th>
                             <td>{{$job->job_type->type  or 'No Type'}}</td>

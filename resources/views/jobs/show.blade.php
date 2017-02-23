@@ -3,11 +3,28 @@
 @section('content')
 
 <div class="row">
-
+    <?php
+    use Carbon\Carbon;
+    $jobDate = new Carbon($job->date)
+    ?>
      <div class="col col-md-8">
        <h2>{{$job->job_type->type}}</h2>
-       <p class="lead">{{$job->name}}</p>
+       <p class="lead">{{$job->name." ".$jobDate->format('l F jS \\  Y')}}</p>
        <p class="lead">{{$job->description}}</p>
+         <div class="row">
+             <div class="col col-md-6">
+                 @foreach($job->contacts as $contact)
+
+                     <h4>{{$contact->fname. " ". $contact->lname}}</h4>
+                     <h4>{{$contact->email}}</h4>
+                     <h4>{{$contact->phone}}</h4>
+
+
+                 @endforeach
+
+             </div>
+
+         </div>
 
 
 

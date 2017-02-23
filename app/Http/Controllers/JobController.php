@@ -74,6 +74,7 @@ class JobController extends Controller
         $contact->fname = $request->fname;
         $contact->lname = $request->lname;
         $contact->email = $request->email;
+        $contact->phone = $request->phone;
 
         $contact->save();
         $contact->contact_type()->sync($request->contact_type, false);
@@ -184,6 +185,7 @@ class JobController extends Controller
     {
        $job = Job::find($id);
        $job->delete();
+        $job->contacts()->sync(array());
        Session::flash('success', 'The Job was successfully deleted');
        return redirect()->route('jobs.index');
 
