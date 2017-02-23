@@ -18,7 +18,7 @@
             {{Form::text('email', null, array('class'=> 'form-control'))}}
 
             {{Form::label('contact_type','Roles:')}}
-            <select name='contact_type[]'class="js-example-basic-multiple form-control" multiple="multiple">
+            <select name='contact_type[]'class="contact-type form-control" multiple="multiple">
                @foreach($contact_types as $contact_type)
                     <option value="{{$contact_type->id}}">{{$contact_type->type}}</option>
                 @endforeach
@@ -32,6 +32,6 @@
 
 @section('java')
     <script type="text/javascript">
-        $(".js-example-basic-multiple").select2();
+        $(".contact-type").select2();
     </script>
 @endsection

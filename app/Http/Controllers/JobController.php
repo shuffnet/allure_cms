@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contact;
+use App\Contact_Type;
 use App\Job;
 use App\JobType;
 use Session;
@@ -37,7 +39,8 @@ class JobController extends Controller
     {
         //
         $job_types = JobType::all();
-        return view('jobs.create')->withJob_types($job_types);
+        $contact_types = Contact_Type::all();
+        return view('jobs.create')->withJob_types($job_types)->withContact_types($contact_types);
 
     }
 
@@ -49,16 +52,33 @@ class JobController extends Controller
      */
     public function store(Request $request)
     {
+
+
+
         //Validate the data
         $this->validate($request, array(
 
             'job_type_id' => 'required|max:255',
-            'name' => 'required|max:255'
+            'name' => 'required|max:255',
+            'fname' => 'required|max:255',
+            'lname' => 'required|max:255',
+            'email' => 'required|max:255|email'
 
         ));
 
 
         //Store in the database
+         //Store in the database
+
+        $contact = new Contact;
+        $contact->fname = $request->fname;
+        $contact->lname = $request->lname;
+        $contact->email = $request->email;
+
+        $contact->save();
+        $contact->contact_type()->sync($request->contact_type, false);
+        $newcontact = array($contact->id);
+
 
         $job = new Job;
         $job->job_type_id = $request->job_type_id;
@@ -66,6 +86,8 @@ class JobController extends Controller
         $job->description = $request->description;
 
         $job->save();
+        $job->contacts()->sync($newcontact, false);
+
 
         Session::flash('success', 'The Job was successfully saved!');
         return redirect()->route('jobs.show', $job->id);

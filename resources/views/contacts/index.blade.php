@@ -5,7 +5,7 @@
 
 
     <div class="row">
-        <div class="col col-md-10"><h1>All Jobs</h1></div>
+        <div class="col col-md-10"><h1>All Contacts</h1></div>
         <div class="col col-md-2"><a href="{{route('contacts.create')}}" class="btn btn-block btn-primary">Create New Contact</a></div>
 
     </div>

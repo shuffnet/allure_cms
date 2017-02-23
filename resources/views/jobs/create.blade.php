@@ -7,6 +7,25 @@
             <h3>Create New Job</h3>
             <hr>
             {!! Form::open(array('route' => 'jobs.store')) !!}
+            {{--//create the client first--}}
+
+            {{Form::label('fname','First Name:')}}
+            {{Form::text('fname', null, array('class'=> 'form-control'))}}
+
+
+            {{Form::label('lname','Last Name:')}}
+            {{Form::text('lname', null, array('class'=> 'form-control'))}}
+            {{Form::label('email','Email:')}}
+            {{Form::text('email', null, array('class'=> 'form-control'))}}
+
+            {{Form::label('contact_type','Roles:')}}
+            <select name='contact_type[]'class="contact-type form-control" multiple="multiple">
+                @foreach($contact_types as $contact_type)
+                    <option value="{{$contact_type->id}}">{{$contact_type->type}}</option>
+                @endforeach
+            </select>
+
+            {{--now create the job--}}
 
             {{Form::label('job_type_id','Job Type:')}}
             {{--{{Form::text('type', null, array('class'=> 'form-control'))}}--}}
@@ -29,19 +48,9 @@
 
 @endsection
 
-{{--@section('java')--}}
-    {{--<script>--}}
 
-        {{--$('#select').on('change', function(){--}}
-
-            {{--$value = $('#select').val()--}}
-            {{--alert($value);--}}
-
-        {{--})--}}
-
-
-
-
-    {{--</script>--}}
-
-{{--@endsection--}}
+@section('java')
+    <script type="text/javascript">
+        $(".contact-type").select2();
+    </script>
+@endsection

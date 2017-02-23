@@ -145,7 +145,15 @@ class ContactController extends Controller
         $contact->lname = $request->input('lname');
         $contact->email = $request->input('email');
         $contact->save();
-        $contact->contact_type()->sync($request->contact_type);
+        if (isset($request->contact_type)){
+
+            $contact->contact_type()->sync($request->contact_type);
+
+        } else{
+
+           $contact->contact_type()->sync(array());
+        }
+
         return redirect()->route('contacts.show', $contact->id);
     }
 
@@ -160,7 +168,8 @@ class ContactController extends Controller
         //
         $contact = Contact::find($id);
         $contact->delete();
-        Session::flash('success', 'The Job was successfully deleted');
+        $contact->contact_type()->sync(array());
+        Session::flash('success', 'The Contact was successfully deleted');
         return redirect()->route('contacts.index');
 
     }
