@@ -1,3 +1,7 @@
+<?php
+use Carbon\Carbon;
+?>
+
 @extends('main')
 
 @section('content')
@@ -17,16 +21,21 @@
                    <th>#</th>
                     <th>Type</th>
                     <th>Name</th>
+                    <th>Date</th>
                     <th>Created</th>
                     <th></th>
                 </thead>
                 <tbody>
                     @foreach($jobs as $job)
                         <tr>
+                            {{$jobDate = new Carbon($job->date)}}
+
                             <th>{{$job->id}}</th>
                             <td>{{$job->job_type->type  or 'No Type'}}</td>
                             <td>{{$job->name}}</td>
-                            <td>{{$job->updated_at->diffForHumans()}}</td>
+
+                            <td>{{isset($jobDate) ? $jobDate->format('l F jS \\  Y') : 'No Date' }}</td>
+                            <td>{{isset($job->updated_at) ? $job->updated_at->format(' M j Y , g:ia') : "No Date"}}</td>
                             <td><a href="{{ route('jobs.show',$job->id)}}" class="btn btn-default btn-sm">View</a>
                                 <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-default btn-sm">Edit</a></td>
 

@@ -62,8 +62,8 @@ class JobController extends Controller
             'name' => 'required|max:255',
             'fname' => 'required|max:255',
             'lname' => 'required|max:255',
-            'email' => 'required|max:255|email'
-
+            'email' => 'required|max:255|email',
+            'date' => 'date'
         ));
 
 
@@ -83,6 +83,7 @@ class JobController extends Controller
         $job = new Job;
         $job->job_type_id = $request->job_type_id;
         $job->name = $request->name;
+        $job->date = $request->date;
         $job->description = $request->description;
 
         $job->save();

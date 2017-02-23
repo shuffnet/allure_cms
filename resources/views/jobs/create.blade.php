@@ -28,15 +28,16 @@
             {{--now create the job--}}
 
             {{Form::label('job_type_id','Job Type:')}}
-            {{--{{Form::text('type', null, array('class'=> 'form-control'))}}--}}
-            <select name="job_type_id" id="" class="form-control">
+
+            <select name="job_type_id" id="jobType" class="form-control">
                 <option value="" disabled selected>Select Job Type</option>
                 @foreach($job_types as $job_type)
                     <option value="{{$job_type->id}}">{{$job_type->type}}</option>
                 @endforeach
 
             </select>
-
+            {{Form::label('date', "Job Date:")}}
+            {{Form::date('date', null, array('id'=>'jobDate','class'=> 'form-control'))}}
             {{Form::label('name','Job Name:')}}
             {{Form::text('name', null, array('class'=> 'form-control'))}}
             {{Form::label('description','Job Description:')}}
@@ -52,5 +53,17 @@
 @section('java')
     <script type="text/javascript">
         $(".contact-type").select2();
+        $("#jobDate").on('change', function(){
+            var fname = $("[name='fname']").val();
+            var lname = $("[name='lname']").val();
+           var type = $("#jobType option:selected").text();
+           var date = $("[name='date']").val();
+
+
+
+            $("[name='name']").val(fname + " " + lname + " " + type  );
+
+        });
+
     </script>
 @endsection
