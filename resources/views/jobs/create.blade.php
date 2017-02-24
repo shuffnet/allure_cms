@@ -21,7 +21,7 @@
             {{Form::text('phone', null, array('id'=>'cell-phone','class'=> 'form-control'))}}
 
             {{Form::label('role','Roles:')}}
-            <select name='role'class=" form-control" >
+            <select name='role[]'class=" form-control" >
                 <option value="" disabled selected>Select Contact Role</option>
                 @foreach($roles as $role)
                     <option value="{{$role->id}}">{{$role->role}}</option>

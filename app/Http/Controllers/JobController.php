@@ -89,6 +89,10 @@ class JobController extends Controller
         $job->contacts()->sync($newcontact, false);
 
 
+        $job->role()->sync($request->role, false);
+
+
+
         Session::flash('success', 'The Job was successfully saved!');
         return redirect()->route('jobs.show', $job->id);
 
@@ -105,6 +109,7 @@ class JobController extends Controller
     {
         //
         $job = Job::find($id);
+
         return view('jobs.show')->with('job', $job);
     }
 
@@ -170,7 +175,7 @@ class JobController extends Controller
     {
        $job = Job::find($id);
        $job->delete();
-        $job->contacts()->sync(array());
+        $job->role()->sync(array());
        Session::flash('success', 'The Job was successfully deleted');
        return redirect()->route('jobs.index');
 

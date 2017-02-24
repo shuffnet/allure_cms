@@ -5,22 +5,41 @@
 <div class="row">
     <?php
     use Carbon\Carbon;
-
+    $jobDate = $job->date;
     if (isset($jobDate)) {
         $jobDate = new Carbon($job->date);
         $jobDate = $jobDate->format('l F jS \\  Y');
-    }else {
+    }
+    else {
         $jobDate = "No Date";
     }
 
     ?>
 
      <div class="col col-md-8">
-       <h2>{{$job->job_type->type}}</h2>
-       <p class="lead">{{$job->name." ".$jobDate}}</p>
-       <p class="lead">{{$job->description}}</p>
          <div class="row">
-             <div class="col col-md-6">
+             <div class="col col-md-12">
+               <h4>{{$job->job_type->type. " ".$jobDate}}</h4>
+
+             </div>
+             <div class="col col-md-4">
+                 @foreach($job->role as $role)
+
+                     <h4>{{$role->role}}</h4>
+
+
+
+                 @endforeach
+
+             </div>
+
+
+         </div>
+
+
+
+         <div class="row">
+             <div class="col col-md-6 well">
                  @foreach($job->contacts as $contact)
 
                      <h4>{{$contact->fname. " ". $contact->lname}}</h4>
@@ -32,6 +51,12 @@
 
              </div>
 
+
+         </div>
+         <div class="row">
+             <div class="col col-md-6 well">
+                 <p class="lead">{{$job->description}}</p>
+             </div>
          </div>
 
 
