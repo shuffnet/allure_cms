@@ -20,10 +20,11 @@
             {{Form::label('phone','Phone:')}}
             {{Form::text('phone', null, array('id'=>'cell-phone','class'=> 'form-control'))}}
 
-            {{Form::label('contact_type','Roles:')}}
-            <select name='contact_type[]'class="contact-type form-control" multiple="multiple">
-                @foreach($contact_types as $contact_type)
-                    <option value="{{$contact_type->id}}">{{$contact_type->type}}</option>
+            {{Form::label('role','Roles:')}}
+            <select name='role'class=" form-control" >
+                <option value="" disabled selected>Select Contact Role</option>
+                @foreach($roles as $role)
+                    <option value="{{$role->id}}">{{$role->role}}</option>
                 @endforeach
             </select>
 
@@ -56,7 +57,7 @@
     {!! Html::script('js/jquery.maskedinput.min.js') !!}
 
     <script type="text/javascript">
-        $(".contact-type").select2();
+//        $(".contact-type").select2();
         $("#jobDate").on('change', function(){
             var fname = $("[name='fname']").val();
             var lname = $("[name='lname']").val();

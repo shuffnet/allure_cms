@@ -18,7 +18,11 @@ class Job extends Model
         return $this->belongsToMany('App\Contact', 'contact_job', 'contact_id', 'job_id');
     }
 
+    public function role(){
 
+        return $this->belongsToMany('App\Role');
+
+    }
 
 
 

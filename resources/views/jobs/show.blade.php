@@ -5,11 +5,19 @@
 <div class="row">
     <?php
     use Carbon\Carbon;
-    $jobDate = new Carbon($job->date)
+
+    if (isset($jobDate)) {
+        $jobDate = new Carbon($job->date);
+        $jobDate = $jobDate->format('l F jS \\  Y');
+    }else {
+        $jobDate = "No Date";
+    }
+
     ?>
+
      <div class="col col-md-8">
        <h2>{{$job->job_type->type}}</h2>
-       <p class="lead">{{$job->name." ".$jobDate->format('l F jS \\  Y')}}</p>
+       <p class="lead">{{$job->name." ".$jobDate}}</p>
        <p class="lead">{{$job->description}}</p>
          <div class="row">
              <div class="col col-md-6">

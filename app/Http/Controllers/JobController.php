@@ -6,6 +6,7 @@ use App\Contact;
 use App\Contact_Type;
 use App\Job;
 use App\JobType;
+use App\Role;
 use Session;
 use Illuminate\Http\Request;
 
@@ -39,8 +40,8 @@ class JobController extends Controller
     {
         //
         $job_types = JobType::all();
-        $contact_types = Contact_Type::all();
-        return view('jobs.create')->withJob_types($job_types)->withContact_types($contact_types);
+        $roles = Role::all();
+        return view('jobs.create')->withJob_types($job_types)->withRoles($roles);
 
     }
 
@@ -66,18 +67,15 @@ class JobController extends Controller
             'date' => 'date'
         ));
 
-
-        //Store in the database
          //Store in the database
 
         $contact = new Contact;
         $contact->fname = $request->fname;
         $contact->lname = $request->lname;
         $contact->email = $request->email;
-        $contact->phone = $request->phone;
 
         $contact->save();
-        $contact->contact_type()->sync($request->contact_type, false);
+
         $newcontact = array($contact->id);
 
 
@@ -95,14 +93,6 @@ class JobController extends Controller
         return redirect()->route('jobs.show', $job->id);
 
 
-
-
-
-        //Redirect to another page
-
-
-
-
     }
 
     /**
@@ -118,12 +108,7 @@ class JobController extends Controller
         return view('jobs.show')->with('job', $job);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+
     public function edit($id)
     {
         //find the post and save as a varible
