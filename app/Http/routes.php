@@ -23,5 +23,6 @@ Route::resource('job_types', 'JobTypeController');
 Route::get('admin', 'PagesController@getAdmin');
 Route::resource('contacts', 'ContactController');
 Route::resource('contact_types', 'Contact_TypeController');
+Route::resource('roles', 'RoleController');
 
 
