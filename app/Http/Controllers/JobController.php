@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Contact;
 use App\Contact_Type;
 use App\Job;
+use App\Job_role;
 use App\JobType;
 use App\Role;
+use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
 
@@ -76,9 +78,6 @@ class JobController extends Controller
 
         $contact->save();
 
-        $newcontact = array($contact->id);
-
-
         $job = new Job;
         $job->job_type_id = $request->job_type_id;
         $job->name = $request->name;
@@ -86,17 +85,19 @@ class JobController extends Controller
         $job->description = $request->description;
 
         $job->save();
-        $job->contacts()->sync($newcontact, false);
 
+        foreach ($request->role as $roleid){
+            $role = $roleid;
 
-        $job->role()->sync($request->role, false);
-
-
+        }
+        $roles = new Job_role;
+        $roles->job_id = $job->id;
+        $roles->role_id = $role;
+        $roles->contact_id = $contact->id;
+        $roles->save();
 
         Session::flash('success', 'The Job was successfully saved!');
         return redirect()->route('jobs.show', $job->id);
-
-
     }
 
     /**
@@ -110,7 +111,14 @@ class JobController extends Controller
         //
         $job = Job::find($id);
 
-        return view('jobs.show')->with('job', $job);
+//       dd($job->role);
+        $contacts = DB::table('job_role')
+            ->leftJoin('contacts', 'job_role.contact_id', '=', 'contacts.id')
+            ->join('roles', 'job_role.role_id', '=', 'roles.id')
+            ->where('job_id', '=', $job->id)
+            ->get();
+//        dd($contacts);
+        return view('jobs.show')->with('job', $job)->withContacts($contacts);
     }
 
 
@@ -181,4 +189,6 @@ class JobController extends Controller
 
 
     }
+
+
 }

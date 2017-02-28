@@ -34,6 +34,7 @@ class PagesController extends Controller {
     public function getAdmin(){
         return view('admin.index');
     }
+
 }
 
 

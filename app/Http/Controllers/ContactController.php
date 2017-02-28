@@ -38,12 +38,7 @@ class ContactController extends Controller
         return view('contacts.create')->withContact_types($contact_types);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         //

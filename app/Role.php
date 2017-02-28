@@ -11,5 +11,11 @@ class Role extends Model
 
         return $this->belongsToMany('App\Job');
 
+
+    }
+
+    public function contact(){
+
+        return $this->belongsToMany('App\Contact');
     }
 }
