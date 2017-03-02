@@ -75,6 +75,7 @@ class JobController extends Controller
         $contact->fname = $request->fname;
         $contact->lname = $request->lname;
         $contact->email = $request->email;
+        $contact->phone = $request->phone;
 
         $contact->save();
 
@@ -111,14 +112,32 @@ class JobController extends Controller
         //
         $job = Job::find($id);
 
-//       dd($job->role);
+
+        $photogs = Contact::whereHas('contact_type', function($q) {
+            $q->where('type', '=', 'photographer');
+        })->get();
+
+        $lead = DB::table('job_role')
+            ->where('job_id', '=', $job->id)
+            ->where('role_id', '=', 7)
+            ->join('contacts','job_role.contact_id' ,'=','contacts.id')
+            ->first();
+
+
+
         $contacts = DB::table('job_role')
             ->leftJoin('contacts', 'job_role.contact_id', '=', 'contacts.id')
             ->join('roles', 'job_role.role_id', '=', 'roles.id')
             ->where('job_id', '=', $job->id)
+            ->select('*','job_role.id')
+            ->orderBy('role', 'asc')
             ->get();
-//        dd($contacts);
-        return view('jobs.show')->with('job', $job)->withContacts($contacts);
+
+        return view('jobs.show')
+            ->with('job', $job)
+            ->withContacts($contacts)
+            ->withPhotogs($photogs)
+            ->withLead($lead);
     }
 
 

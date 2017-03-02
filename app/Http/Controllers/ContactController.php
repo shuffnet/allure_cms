@@ -60,6 +60,7 @@ class ContactController extends Controller
         $contact->fname = $request->fname;
         $contact->lname = $request->lname;
         $contact->email = $request->email;
+        $contact->phone = $request->phone;
 
         $contact->save();
         $contact->contact_type()->sync($request->contact_type, false);

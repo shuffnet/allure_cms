@@ -16,6 +16,8 @@
             {{Form::text('lname', null, array('class'=> 'form-control'))}}
             {{Form::label('email','Email:')}}
             {{Form::text('email', null, array('class'=> 'form-control'))}}
+            {{Form::label('phone','Phone:')}}
+            {{Form::text('phone', null, array('id'=>'cell-phone','class'=> 'form-control'))}}
 
             {{Form::label('contact_type','Roles:')}}
             <select name='contact_type[]'class="contact-type form-control" multiple="multiple">
@@ -31,6 +33,17 @@
 @endsection
 
 @section('java')
+    {!! Html::script('js/jquery.maskedinput.min.js') !!}
+
+    <script type="text/javascript">
+
+        $('#cell-phone').mask('(999) 999-9999');
+        $('#secondary-phone').mask('a(999) 999-9999?ex9999');
+        $('#spousePhone').mask('a(999) 999-9999?ex9999');
+        $('#emergencyPhone').mask('a(999) 999-9999?ex9999');
+
+    </script>
+
     <script type="text/javascript">
         $(".contact-type").select2();
     </script>

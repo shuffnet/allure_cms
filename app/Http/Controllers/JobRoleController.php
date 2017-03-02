@@ -2,16 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Contact;
 use App\Job_role;
-use App\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
 use Session;
-use App\Contact_Type;
 
-class AddMoreContactsController extends Controller
+class JobRoleController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,23 +22,13 @@ class AddMoreContactsController extends Controller
     }
 
     /**
-     * @return string
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
      */
-    public function createMore($id)
-   {
-       $job = $id;
-
-       $roles = Role::all();
-
-
-       return view('add_contacts.create')->with('job', $job)->withRoles($roles);
-
-   }
     public function create()
     {
-//        return view('add_contacts.create');
-//        return($id);\
-        return'create';
+        //
     }
 
     /**
@@ -51,45 +39,16 @@ class AddMoreContactsController extends Controller
      */
     public function store(Request $request)
     {
-        //
-        //Validate the data
-        $this->validate($request, array(
+        $job_id = $request->job_id;
+        $role_id = $request->role_id;
+        $contact_id = $request->contact_id;
 
-            'fname' => 'required|max:255',
-            'lname' => 'required|max:255',
-            'email' => 'required|max:255|email',
-            'role' => 'required |max:255'
-
-        ));
-
-
-        //Store in the database
-        $job = $request->id;
-        $contact = new Contact;
-        $contact->fname = $request->fname;
-        $contact->lname = $request->lname;
-        $contact->email = $request->email;
-        $contact->phone = $request->phone;
-
-        $contact->save();
-
-        foreach ($request->role as $roleid){
-            $role = $roleid;
-
-        }
         $roles = new Job_role;
-        $roles->job_id = $job;
-        $roles->role_id = $role;
-        $roles->contact_id = $contact->id;
+        $roles->job_id = $job_id;
+        $roles->role_id = $role_id;
+        $roles->contact_id = $contact_id;
         $roles->save();
-
-
-        Session::flash('success', 'The Contact was successfully saved!');
-        return redirect()->route('jobs.show', $job);
-
-
-
-
+        Session::flash('success', 'Photographer Successful Added!!');
     }
 
     /**
@@ -134,6 +93,10 @@ class AddMoreContactsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $role = job_role::find($id);
+        $role->delete();
+      return Redirect::back();
+
+
     }
 }
