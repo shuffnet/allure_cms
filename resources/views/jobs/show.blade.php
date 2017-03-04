@@ -12,12 +12,42 @@ else {
 
 ?>
 @section('content')
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">  <!--Top Row Row-->
-            <div class="col col-md-8"> <!--Job Name Column-->
+            <div class="col col-md-8 col-md-offset-2"> <!--Job Name Column-->
                 <div class="row ">
-                    <div class="col col-md-12">
+                    <div class="col col-md-8">
                         <h3><a href="">{{$job->name." "}}</a>{{$jobDate}}</h3>
+
+                    </div>
+                    <div class="col col-md-3">
+
+                        <div class="row">
+                            <div class="col col-md-4">
+                                <a class="'btn col btn-link  " href="Details"><small>Details</small></a>
+
+
+                            </div>
+                            <div class="col col-md-4">
+                                <a class="'btn col btn-link  " href="{{ route('jobs.edit', $job->id) }}"><small>Edit</small></a>
+
+
+                            </div>
+
+                           <div class="col col-md-4">
+
+                                   {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method'=>'DELETE']) !!}
+
+                                   {{Form::submit('Delete', array('class'=> 'btn btn-link btn-sm'))}}
+                                   {!! Form::close() !!}
+
+
+
+                           </div>
+
+                        </div>
+
+
                     </div>
                 </div>
                 <div class="row">
@@ -27,7 +57,12 @@ else {
                             <h4 class=""><small>Photographed by:
                                 </small> {{$lead->fname." ".$lead->lname}}</h4>
                         </div>
+
+
                 </div>
+
+                @include('partials._jobNav')
+
                 @else
                     <div class="col col-md-3">
                         <h4 class="text-right"><small>Photographed by:</small></h4>
@@ -50,6 +85,9 @@ else {
                     </div>
 
 
+                    @include('partials._jobNav')
+                        ...
+                    </nav>
             </div> <!--End Job Name Column-->
 
             @endif
@@ -57,38 +95,7 @@ else {
 
 
         </div> <!--End of job name column-->
-        <div class="col col-md-4"> <!--Job Edit Column-->
-            <div class="well">
-                <div class="row">
-                    <dl class="dl-horizontal">
-                        <dt>Create at:</dt>
-                        <dd>{{$job->created_at->diffForHumans()}}</dd>
-                        <dd>{{$job->created_at->format(' M j Y , g:ia') }}</dd>
-                    </dl>
-                    <dl class="dl-horizontal">
-                        <dt>Last Updated:</dt>
-                        <dd>{{$job->updated_at->diffForHumans()}}</dd>
-                        <dd>{{$job->updated_at->format(' M j Y , g:ia') }}</dd>
-                    </dl>
-                </div>
-                <div class="row">
-                    <div class="col-sm-6">
 
-                        <a href="{{ route('jobs.edit', $job->id) }}" class="btn btn-primary btn-block">Edit</a></td>
-
-                    </div>
-                    <div class="col-sm-6">
-                        {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method'=>'DELETE']) !!}
-
-                        {{Form::submit('Delete', array('class'=> 'btn btn-danger  btn-block'))}}
-                        {!! Form::close() !!}
-                    </div>
-                </div>
-
-
-            </div>
-
-        </div> <!--End Of Job Edit Column-->
 
     </div>  <!--End of Top Row-->
 
@@ -146,30 +153,11 @@ else {
 
 
             </div>
-            <div class="col col-md-6"> <!--Tabs Section-->
+            <div class="col col-md-6"> <!--Center Content Section-->
+                @include('partials/_orderForm').
 
 
-                <div id="tabs" class="well">
-                    <ul>
-                        <li><a href="#tabs-1">Sessions</a></li>
-                        <li><a href="#tabs-2">Orders</a></li>
-                        <li><a href="#tabs-3">Emails</a></li>
-                        <li><a href="#tabs-4">Production</a></li>
-                    </ul>
-                    <div id="tabs-1">
-                        <p>Sessions</p>
-                    </div>
-                    <div id="tabs-2">
-                        <p>Orders</p>
-                    </div>
-                    <div id="tabs-3">
-                        <p>Emails</p>
-                    </div>
-                    <div id="tabs-4">
-                        <p>Production</p>
-                    </div>
-                </div>
-            </div> <!--End of Tabs Section-->
+            </div> <!--Center Content Section-->
             <div class="col col-md-4 well"> <!--Start of Notes Section-->
                 <p>This is where notes will be</p>
             </div> <!--End of Notes Section-->
