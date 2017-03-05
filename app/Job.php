@@ -6,18 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    //
+
     public function job_type(){
 
         return $this->belongsTo('App\JobType');
 
     }
 
-//    public function contact(){
-//
-//        return $this->belongsToMany('App\Contact','job_role', 'id', 'contact_id');
-//    }
-//
+
+
 
     public function role(){
 
@@ -32,6 +29,9 @@ class Job extends Model
         return $this->belongsToMany('App\Contact');
     }
 
+    public function order(){
 
+        return $this->hasMany('App\Order');
+    }
 
 }

@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,6 +48,9 @@
                 <li class="{{Request::is('jobs') ? "active": ""}}"><a href="/jobs">Home </a></li>
                 <li class="{{Request::is('admin') ? "active": ""}}"><a href="/admin">Admin</a></li>
                 <li class="{{Request::is('contacts') ? "active": ""}}"><a href="/contacts">Contacts</a></li>
+                <li class="{{Request::is('orders') ? "active": ""}}"><a href="/orders">Orders</a></li>
+
+
 
             </ul>
 

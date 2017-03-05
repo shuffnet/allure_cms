@@ -1,6 +1,8 @@
 @extends('main')
 <?php
 use Carbon\Carbon;
+
+
 $jobDate = $job->date;
 if (isset($jobDate)) {
     $jobDate = new Carbon($job->date);
@@ -64,6 +66,7 @@ else {
                 @include('partials._jobNav')
 
                 @else
+                    @include('partials._jobNav')
                     <div class="col col-md-3">
                         <h4 class="text-right"><small>Photographed by:</small></h4>
                     </div>
@@ -85,8 +88,8 @@ else {
                     </div>
 
 
-                    @include('partials._jobNav')
-                        ...
+
+
                     </nav>
             </div> <!--End Job Name Column-->
 
@@ -154,12 +157,14 @@ else {
 
             </div>
             <div class="col col-md-6"> <!--Center Content Section-->
-                @include('partials/_orderForm').
+                @include('partials/_orderForm')
+                @include('partials/_jobOrders')
 
 
             </div> <!--Center Content Section-->
             <div class="col col-md-4 well"> <!--Start of Notes Section-->
                 <p>This is where notes will be</p>
+
             </div> <!--End of Notes Section-->
 
         </div>

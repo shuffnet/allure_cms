@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use Session;
+use App\OrderType;
 use Illuminate\Http\Request;
+use Session;
 
 use App\Http\Requests;
 
-class OrderController extends Controller
+class OrderTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,10 +17,9 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::all();
-
-
-        return view('orders.index')->with('orders', $orders);
+        //
+        $order_types = OrderType::all();
+        return view('order_types.index')->with('order_types',$order_types);
     }
 
     /**
@@ -43,34 +42,23 @@ class OrderController extends Controller
     {
         //
         //Validate the data
+        $this->validate($request, [
+            'type' => 'required|unique:contact_types|max:255',
 
-        $this->validate($request, array(
+        ]);
 
-
-
-
-
-        ));
 
 
         //Store in the database
 
-        $order = new Order;
-        $order->orderType_id = $request->orderType_id;
-        $order->contact_id = $request->contact_id;
-        $order->job_id = $request->job_id;
-        $order->orderDate = $request->orderDate;
-        $order->createdBy_id = $request->createdBy_id;
+        $order_type = new OrderType;
+        $order_type->type = $request->type;
 
-
-
-
-
-        $order->save();
+        $order_type->save();
 
         Session::flash('success', 'The Job was successfully saved!');
-        return redirect()->route('jobs.show', $order->job_id);
-
+//
+        return redirect()->route('order_type.index');
 
 
     }
@@ -95,6 +83,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         //
+        $order_type = OrderType::find($id);
+        return view('order_types.edit')->with('order_type',$order_type);
+
     }
 
     /**
@@ -107,6 +98,29 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+
+        $this->validate($request, array(
+
+            'type' => 'required|unique:order_types|max:255',
+
+
+        ));
+        //save date to database
+
+        $order_type = OrderType::find($id);
+
+        $order_type->type = $request->input('type');
+
+        $order_type->save();
+
+
+        //set flash message
+
+        Session::flash('success', 'Order Type was updated');
+        //redirect with flash date to show
+
+
+        return redirect()->route('order_type.index');
     }
 
     /**

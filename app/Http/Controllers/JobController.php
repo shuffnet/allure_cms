@@ -7,6 +7,7 @@ use App\Contact_Type;
 use App\Job;
 use App\Job_role;
 use App\JobType;
+use App\OrderType;
 use App\Role;
 use Illuminate\Support\Facades\DB;
 use Session;
@@ -27,7 +28,7 @@ class JobController extends Controller
         // return a view and pass in the variable
         $jobs = Job::all();
 
-       // return view('jobs.index')->withJobs($jobs);
+
        return view('jobs.index')->with('jobs', $jobs);
 
 
@@ -84,6 +85,7 @@ class JobController extends Controller
         $job->name = $request->name;
         $job->date = $request->date;
         $job->description = $request->description;
+        $job->client_id = $contact->id;
 
         $job->save();
 
@@ -110,6 +112,7 @@ class JobController extends Controller
     public function show($id)
     {
         //
+        $order_types = OrderType::all();
         $job = Job::find($id);
 
 
@@ -132,12 +135,24 @@ class JobController extends Controller
             ->select('*','job_role.id')
             ->orderBy('role', 'asc')
             ->get();
+        $orders = DB::table('orders')
+
+            ->where('job_id', "=", $job->id)
+            ->join('contacts', 'orders.contact_id', '=', 'contacts.id')
+            ->join('order_types','orders.orderType_id', '=', 'order_types.id')
+            ->select('orders.id', 'contacts.fname', 'contacts.lname', 'order_types.type', 'orders.orderDate')
+
+
+
+            ->get();
 
         return view('jobs.show')
             ->with('job', $job)
             ->withContacts($contacts)
             ->withPhotogs($photogs)
-            ->withLead($lead);
+            ->withLead($lead)
+            ->withOrder_types($order_types)
+            ->withOrders($orders);
     }
 
 

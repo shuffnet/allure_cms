@@ -32,6 +32,7 @@ Route::resource('add_contacts', 'AddMoreContactsController');
 Route::resource('addphotog/{$data}','JobRoleController@store');
 Route::resource('job_role', 'JobRoleController');
 Route::resource('orders', 'OrderController');
+Route::resource('order_type', 'OrderTypeController');
 
 
 
