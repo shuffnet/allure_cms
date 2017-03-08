@@ -4,7 +4,7 @@ $date = Carbon::now()
 ?>
 
 
-{!! Form::open(array('route' => 'orders.store', 'class'=>'hidden')) !!}
+{!! Form::open(array('route' => 'orders.store', 'class'=>'')) !!}
 
 
 {{Form::label('orderType_id','Order Type:')}}
