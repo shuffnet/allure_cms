@@ -13,7 +13,7 @@
             <div>
                 @foreach($contact->contact_type as $type)
 
-                    <span class="label label-default">{{$type->type}}</span>
+                    <span class="label label-default">{{$type->role}}</span>
 
 
                 @endforeach

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Role;
-use Session;
+use App\Package;
+use App\ProductService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Session;
 
-class RoleController extends Controller
+class PackageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +18,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        //
-        $roles = Role::all();
-        return view('roles.index')->with('roles',$roles);
+        $products = ProductService::all();
+        $packages = Package::all();
+        return view('packages.index')->withProducts($products)->withPackages($packages);
     }
 
     /**
@@ -40,29 +41,34 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
+        //Validate the data
+
         $this->validate($request, array(
 
-            'role' => 'required|unique:roles|max:255',
+
 
 
 
         ));
 
+
         //Store in the database
 
-        $role = new Role;
-        $role->role = $request->role;
 
-        $role->save();
-
-        Session::flash('success', 'The Role was successfully saved!');
-        return redirect()->route('roles.index');
+        $package = new Package();
+        $package->name = $request->name;
+        $package->price = $request->price;
+        $package->type_id = $request->type_id;
 
 
 
+        $package->save();
+
+        Session::flash('success', 'The Package was successfully saved!');
+        return redirect()->route('packages.index')->withPackages($package);
 
 
-        //Redirect to another page
+
     }
 
     /**
@@ -85,10 +91,6 @@ class RoleController extends Controller
     public function edit($id)
     {
         //
-        $role = Role::find($id);
-        return view('roles.edit')->with('role',$role);
-
-
     }
 
     /**
@@ -100,26 +102,7 @@ class RoleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, array(
-
-            'role' => 'required|unique:roles|max:255',
-        ));
-        //save date to database
-
-        $role = Role::find($id);
-
-
-
-        $role->role = $request->role;
-
-        $role->save();
-
-
-        //set flash message
-
-        Session::flash('success', 'Role was updated');
-        //redirect with flash date to show
-        return redirect()->route('roles.index');
+        //
     }
 
     /**
@@ -131,9 +114,5 @@ class RoleController extends Controller
     public function destroy($id)
     {
         //
-        $role = Role::find($id);
-        $role->delete();
-        Session::flash('success', 'The Role was successfully deleted');
-        return redirect()->route('job_types.index');
     }
 }

@@ -39,17 +39,3 @@
 
 </table>
 
-@section('java')
-    <script>
-        $(document).ready(function(){
-            $('#ordersTable').DataTable({
-
-                searching: false,
-                paging: false,
-                info:     false
-            });
-        });
-
-    </script>
-
-    @stop

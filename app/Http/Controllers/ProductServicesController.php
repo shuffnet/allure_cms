@@ -6,6 +6,7 @@ use App\ProductService;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Session;
 
 class ProductServicesController extends Controller
 {
@@ -65,6 +66,7 @@ class ProductServicesController extends Controller
         $product->description = $request->description;
         $product->tips = $request->tips;
         $product->requirements = $request->requirements;
+        $product->upsale = $request->upsale;
 
 
         $product->save();

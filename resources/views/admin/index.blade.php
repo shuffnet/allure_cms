@@ -6,7 +6,8 @@
     <a href="{{ route('contact_types.index') }}" class="">Contact Types</a></td><br/>
     <a href="{{ route('roles.index') }}" class="">Job Roles</a></td><br/>
     <a href="{{ route('order_type.index') }}" class="">Order Types</a></td><br/>
-    <a href="{{ route('orderItems.index') }}" class="">Order Items</a></td><br/>
+    <a href="{{ route('productServices.index') }}" class="">Products & Services</a></td><br/>
+    <a href="{{ route('packages.index') }}" class="">Packages</a></td><br/>
 
 
 

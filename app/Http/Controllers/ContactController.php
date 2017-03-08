@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact_Type;
+use App\Role;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
@@ -33,9 +34,9 @@ class ContactController extends Controller
     public function create()
     {
         //
-        $contact_types = Contact_Type::all();
+        $roles = Role::all();
 
-        return view('contacts.create')->withContact_types($contact_types);
+        return view('contacts.create')->withRoles($roles);
     }
 
 
@@ -63,7 +64,7 @@ class ContactController extends Controller
         $contact->phone = $request->phone;
 
         $contact->save();
-        $contact->contact_type()->sync($request->contact_type, false);
+        $contact->contact_type()->sync($request->contact_role, false);
 
         Session::flash('success', 'The Contact was successfully saved!');
         return redirect()->route('contacts.show', $contact->id);

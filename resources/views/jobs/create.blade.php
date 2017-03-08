@@ -57,6 +57,13 @@
     {!! Html::script('js/jquery.maskedinput.min.js') !!}
 
     <script type="text/javascript">
+
+
+
+
+
+
+
 //        $(".contact-type").select2();
         $("#jobDate").on('change', function(){
             var fname = $("[name='fname']").val();

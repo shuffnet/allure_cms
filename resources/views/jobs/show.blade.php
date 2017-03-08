@@ -74,14 +74,14 @@ else {
                         <form action="">
                             {{ csrf_field() }}
                             <select name="photog" id="photog" class="form-control">
-                                <option value="" disabled selected>Select Job Type</option>
+                                <option value="" disabled selected>Select Photographer</option>
                                 @foreach($photogs as $photog)
                                     <option value="{{$photog->id}}">{{$photog->fname." ".$photog->lname}}</option>
                                 @endforeach
 
                             </select>
                             <div class="col col-md-1">
-                                <div id="add-existing-contact" class="btn btn-link">Save</div>
+                                <div id="add-existing-contact" class="btn btn-link">Add Photographer</div>
                             </div>
                         </form>
 
@@ -171,16 +171,23 @@ else {
     </div>
 @endsection
 @section('java')
-    {{ Html::style('css/jquery-ui.css') }}
-    {{ Html::style('css/jquery-ui.structure.css') }}
 
-    {{ Html::script('js/jquery-ui.js') }}
+
+
+
+
+
+
 
     <script type="text/javascript">
+
+
         $(document).ready(function(){
-            $('#add-existing-contact').click(function(){
+
+           $('#add-existing-contact').click(function(){
+
                 var $lead = $("#photog option:selected").val()
-                var $role = '7';
+                var $role = '1';
                 var $job = '{{$job->id}}';
                 var $token = "{{csrf_token()}}";
 
@@ -195,20 +202,32 @@ else {
 
 
                         success: function(data){
-                            window.location.reload();;
+                            window.location.reload();
                         }
                     }
                 });
-            });
+           });
 
 
 
         });
 
-        $( function() {
-            $( "#tabs" ).tabs();
-        } );
+
+
+
+
+    </script>
+    <script>
+        $(document).ready(function(){
+            $('#ordersTable').DataTable({
+
+                searching: false,
+                paging: false,
+                info:     false
+            });
+        });
+
     </script>
 
 
-@endsection
+@stop

@@ -117,12 +117,12 @@ class JobController extends Controller
 
 
         $photogs = Contact::whereHas('contact_type', function($q) {
-            $q->where('type', '=', 'photographer');
+            $q->where('role', '=', 'Lead photographer');
         })->get();
 
         $lead = DB::table('job_role')
             ->where('job_id', '=', $job->id)
-            ->where('role_id', '=', 7)
+            ->where('role_id', '=', 1)
             ->join('contacts','job_role.contact_id' ,'=','contacts.id')
             ->first();
 

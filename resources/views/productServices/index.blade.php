@@ -9,12 +9,13 @@
             <table class="table">
                 <thead>
                 <th>Type</th>
+                <th>Item</th>
                 <th></th>
                 <th></th>
                 </thead>
                 <tbody>
                 @foreach($productServices as $product)
-                    <tr><td>{{$product->type}}</td><td><a href="{{ route('order_type.edit', $product->id) }}">edit</a></tr>
+                    <tr><td>{{$product->type_id}}</td><td>{{$product->item}}</td><td>{{"$".$product->price}}</td><td><a href="{{ route('order_type.edit', $product->id) }}">edit</a></tr>
 
                 @endforeach
 
@@ -50,11 +51,11 @@
 
 
 
-
+            </select>
 
             {{Form::label('item','Item/Service:')}}
             {{Form::text('item', null, array('class'=> 'form-control'))}}
-            </select>
+
             <div class="checkbox">
                 <label>
                     <input name="taxable" type="checkbox" value="1" checked>
@@ -77,6 +78,8 @@
             {{Form::textarea('tips',null , array('class'=> 'form-control'))}}
             {{Form::label('requirements','Requirements:')}}
             {{Form::textarea('requirements',null , array('class'=> 'form-control'))}}
+            {{Form::label('upsale','Upsale Options:')}}
+            {{Form::textarea('upsale',null , array('class'=> 'form-control'))}}
             {{Form::submit('Save', array('class'=> 'btn btn-success btn-lg btn-block'))}}
 
             {!! Form::close() !!}
