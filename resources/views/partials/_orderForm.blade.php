@@ -2,7 +2,7 @@
 
 $date = Carbon::now()
 ?>
-
+<div class="hidden">
 
 {!! Form::open(array('route' => 'orders.store', 'class'=>'')) !!}
 
@@ -25,3 +25,5 @@ $date = Carbon::now()
 
 {{Form::submit('Save', array('class'=> 'btn btn-success btn-lg btn-block'))}}
 {!! Form::close() !!}
+
+</div>

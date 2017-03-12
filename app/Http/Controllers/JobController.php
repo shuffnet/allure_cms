@@ -9,6 +9,7 @@ use App\Job_role;
 use App\JobType;
 use App\OrderType;
 use App\Role;
+use App\ShotList;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
@@ -135,6 +136,8 @@ class JobController extends Controller
             ->select('*','job_role.id')
             ->orderBy('role', 'asc')
             ->get();
+
+        $shotList = ShotList::all();
         $orders = DB::table('orders')
 
             ->where('job_id', "=", $job->id)
@@ -152,7 +155,8 @@ class JobController extends Controller
             ->withPhotogs($photogs)
             ->withLead($lead)
             ->withOrder_types($order_types)
-            ->withOrders($orders);
+            ->withOrders($orders)
+            ->withShots($shotList);
     }
 
 

@@ -8,6 +8,8 @@
     <a href="{{ route('order_type.index') }}" class="">Order Types</a></td><br/>
     <a href="{{ route('productServices.index') }}" class="">Products & Services</a></td><br/>
     <a href="{{ route('packages.index') }}" class="">Packages</a></td><br/>
+    <a href="{{ route('shotList.index') }}" class="">Shot List</a></td><br/>
+
 
 
 

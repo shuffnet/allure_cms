@@ -1,5 +1,5 @@
 
-
+<div class="hidden">
 
 <h3>Orders for this job</h3>
 <table class="" id="ordersTable">
@@ -39,3 +39,4 @@
 
 </table>
 
+</div>

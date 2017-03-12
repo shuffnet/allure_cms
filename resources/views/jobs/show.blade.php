@@ -156,16 +156,17 @@ else {
 
 
             </div>
-            <div class="col col-md-6"> <!--Center Content Section-->
+            <div class="col col-md-8"> <!--Center Content Section-->
                 @include('partials/_orderForm')
                 @include('partials/_jobOrders')
+                @include('partials/_jobTimeline')
 
 
             </div> <!--Center Content Section-->
-            <div class="col col-md-4 well"> <!--Start of Notes Section-->
-                <p>This is where notes will be</p>
+            {{--<div class="col col-md-4 well"> <!--Start of Notes Section-->--}}
+                {{--<p>This is where notes will be</p>--}}
 
-            </div> <!--End of Notes Section-->
+            {{--</div> <!--End of Notes Section-->--}}
 
         </div>
     </div>
@@ -225,7 +226,109 @@ else {
                 paging: false,
                 info:     false
             });
+            $('#timeline').DataTable({
+
+                searching: false,
+                paging: false,
+                info:     false
+            });
         });
+
+        $('#cermonyAdd').on('click', function () {
+            ceremonyDate = $('#ceremony-date-id').val();
+            ceremonyStartTime = $('#ceremony-time-id').val();
+           ceremonyEndTime = $('#ceremony-end-id').val();
+
+            ceremonyDateTime = ceremonyDate + ',' + ceremonyStartTime;
+            ceremonyEndDateTime = ceremonyDate + ','+ ceremonyEndTime;
+            ceremonyStartDateTime = new Date(ceremonyDateTime);
+            ceremonyEndDateTime = new Date(ceremonyEndDateTime);
+            ceremonyStartShort = ceremonyStartDateTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+            ceremonyEndShort = ceremonyEndDateTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+
+            setup = subtractMinutes(ceremonyStartDateTime,15);
+            setupHour = setup.getHours();
+            setupMin = setup.getMinutes();
+            setupTotal = setupHour +":"+ setupMin;
+            setupShort = setup.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            pbreak = subtractMinutes(ceremonyStartDateTime,30);
+            pbreakHour = pbreak.getHours();
+            pbreakMin = pbreak.getMinutes();
+            pbreakTotal = pbreakHour +":"+ pbreakMin;
+            pbreakShort = pbreak.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+
+            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+pbreakShort+"</td><td class='hidden'>"+pbreakTotal+"</td><td>Photographers Break</td></tr>");
+
+            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+setupShort+"</td><td class='hidden'>"+setupTotal+"</td><td>Photographers Setup For Ceremony</td></tr>");
+
+            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+ceremonyStartShort+"</td><td class='hidden'>"+ceremonyStartTime+"</td><td> Ceremony Start Time</td></tr>");
+            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+ceremonyEndShort+"</td><td class='hidden'>"+ceremonyEndTime+"</td><td> Ceremony End Time</td></tr>");
+
+
+
+              var minutes = $('tr:last td:first').text();
+              var time = $('tr:last td:nth-child(3)').text();
+//              alert(minutes+','+time);
+
+
+        })
+
+        $('#shotListTable .addPost').on('click',function(){
+            var $row = $(this).closest("tr");       // Finds the closest row <tr>
+            $minutes = $row.find("td:nth-child(1)").text();
+            $shot =  $row.find("td:nth-child(2)").text();
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(3)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(1)').text();
+
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+           shortHour = setNewTime.getHours();
+           shortMin = setNewTime.getMinutes();
+           longTime = shortHour +":"+ shortMin;
+           shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td></tr>");
+            $row.addClass('hidden');
+        });
+
+        $('#shotListTable .addPre').on('click',function() {
+            var $row = $(this).closest("tr");       // Finds the closest row <tr>
+            $minutes = $row.find("td:nth-child(1)").text();
+            $shot = $row.find("td:nth-child(2)").text();
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(3)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(1)').text();
+
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour + ":" + shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+            $('#timeline').prepend("<tr><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td></tr>");
+            $row.addClass('hidden');
+        });
+
+        function addMinutes(date, minutes) {
+
+            return new Date(date.getTime() + minutes*60000);
+        }
+        function subtractMinutes(date, minutes) {
+
+            return new Date(date.getTime() - minutes*60000);
+
+
+        }
 
     </script>
 

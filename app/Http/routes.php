@@ -36,6 +36,8 @@ Route::resource('order_type', 'OrderTypeController');
 Route::resource('orderItems', 'OrderItemController');
 Route::resource('productServices', 'ProductServicesController');
 Route::resource('packages', 'PackageController');
+Route::resource('shotList', 'ShotListController');
+
 
 
 
