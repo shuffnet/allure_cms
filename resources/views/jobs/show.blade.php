@@ -156,7 +156,7 @@ else {
 
 
             </div>
-            <div class="col col-md-8"> <!--Center Content Section-->
+            <div class="col col-md-10"> <!--Center Content Section-->
                 @include('partials/_orderForm')
                 @include('partials/_jobOrders')
                 @include('partials/_jobTimeline')
@@ -219,20 +219,8 @@ else {
 
     </script>
     <script>
-        $(document).ready(function(){
-            $('#ordersTable').DataTable({
 
-                searching: false,
-                paging: false,
-                info:     false
-            });
-            $('#timeline').DataTable({
 
-                searching: false,
-                paging: false,
-                info:     false
-            });
-        });
 
         $('#cermonyAdd').on('click', function () {
             ceremonyDate = $('#ceremony-date-id').val();
@@ -260,12 +248,12 @@ else {
             pbreakShort = pbreak.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
 
 
-            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+pbreakShort+"</td><td class='hidden'>"+pbreakTotal+"</td><td>Photographers Break</td></tr>");
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove  btn-link'>Remove</td><td class='hidden'>0</td><td>"+pbreakShort+"</td><td class='hidden'>"+pbreakTotal+"</td><td>Photographers Break</td></tr>");
 
-            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+setupShort+"</td><td class='hidden'>"+setupTotal+"</td><td>Photographers Setup For Ceremony</td></tr>");
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>0</td><td>"+setupShort+"</td><td class='hidden'>"+setupTotal+"</td><td>Photographers Setup For Ceremony</td></tr>");
 
-            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+ceremonyStartShort+"</td><td class='hidden'>"+ceremonyStartTime+"</td><td> Ceremony Start Time</td></tr>");
-            $('#timeline').append("<tr><td class='hidden'>0</td><td>"+ceremonyEndShort+"</td><td class='hidden'>"+ceremonyEndTime+"</td><td> Ceremony End Time</td></tr>");
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>0</td><td>"+ceremonyStartShort+"</td><td class='hidden'>"+ceremonyStartTime+"</td><td> Ceremony Start Time</td></tr>");
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>0</td><td>"+ceremonyEndShort+"</td><td class='hidden'>"+ceremonyEndTime+"</td><td> Ceremony End Time</td></tr>");
 
 
 
@@ -278,11 +266,15 @@ else {
 
         $('#shotListTable .addPost').on('click',function(){
             var $row = $(this).closest("tr");       // Finds the closest row <tr>
-            $minutes = $row.find("td:nth-child(1)").text();
-            $shot =  $row.find("td:nth-child(2)").text();
+            $minutes = $row.find("td:nth-child(2)").text();
+            $shot =  $row.find("td:nth-child(3)").text();
             setDate = $('#ceremony-date-id').val();
-            setStartTime = $('#timeline tr:last td:nth-child(3)').text();
-            setShotTime = $('#timeline tr:last td:nth-child(1)').text();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+            $shots = $row.find("td:nth-child(4)").html();
+            $tips = $row.find("td:nth-child(5)").text();
+
+
 
 
             setDateTime = setDate + ',' + setStartTime;
@@ -294,17 +286,60 @@ else {
            longTime = shortHour +":"+ shortMin;
            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
 
-            $('#timeline').append("<tr><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td></tr>");
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
             $row.addClass('hidden');
+            $row2 = $(this).closest('tr').next('tr');
+            $row3 = $row2.next('tr');
+            $row2.addClass('hidden');
+            $row3.addClass('hidden');
+
         });
+
 
         $('#shotListTable .addPre').on('click',function() {
             var $row = $(this).closest("tr");       // Finds the closest row <tr>
-            $minutes = $row.find("td:nth-child(1)").text();
-            $shot = $row.find("td:nth-child(2)").text();
+            $minutes = $row.find("td:nth-child(2)").text();
+            $shot = $row.find("td:nth-child(3)").text();
+            $shots = $row.find("td:nth-child(4)").html();
+            $tips = $row.find("td:nth-child(5)").text();
             setDate = $('#ceremony-date-id').val();
-            setStartTime = $('#timeline tr:first td:nth-child(3)').text();
-            setShotTime = $('#timeline tr:first td:nth-child(1)').text();
+            setStartTime = $('#timeline tr:first td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(3)').text();
+
+
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+            //This hides the hidden colapsed rows
+
+            $row.addClass('hidden');
+            $row2 = $(this).closest('tr').next('tr');
+            $row3 = $row2.next('tr');
+            $row2.addClass('hidden');
+            $row3.addClass('hidden');
+        });
+        $('#custPre').on('click', function () {
+
+            $minutes = $( "input[name='custTime']" ).val();
+            $shot = $( "input[name='custShot']" ).val();
+            $shots = $("#custShotsList").val();
+            $tips = $("#custShotTips").val();
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(3)').text();
 
 
             setDateTime = setDate + ',' + setStartTime;
@@ -315,20 +350,152 @@ else {
             shortMin = setNewTime.getMinutes();
             longTime = shortHour + ":" + shortMin;
             shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
-            $('#timeline').prepend("<tr><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td></tr>");
-            $row.addClass('hidden');
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+            $('#custShotForm').trigger("reset");
+            $('#custShotsList').val("");
+            $('#custShotModal').modal('hide');
+
+
         });
+        $('#custPost').on('click', function () {
+
+            $minutes = $( "input[name='custTime']" ).val();
+            $shot = $( "input[name='custShot']" ).val();
+            $shots = $("#custShotsList").val();
+            $tips = $("#custShotTips").val();
+
+
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+            $('#custShotForm').trigger("reset");
+            $('#custShotsList').val("");
+            $('#custShotModal').modal('hide');
+
+
+        });
+//        This is the edit button on the timeline table
+
+        $('body').on('click', '.edit', function() {
+            $("#myModal").modal("show");
+            $shot = $(this).parent().find("td:nth-child(6)").text();
+            $time = $(this).parent().find("td:nth-child(3)").text();
+            $shots = $(this).parent().find("td:nth-child(7)").text();
+            $tips = $(this).parent().find("td:nth-child(8)").text();
+            $('#shot').val($shot);
+            $('#time').val($time);
+            $('#shots').val($shots);
+            $('#tips').val($tips);
+            $(this).parent().remove();
+
+        });
+//        This is the save button on the shot edit modal
+        $('#editModal').on('click', function(){
+
+            //            add row to the table
+
+            $minutes = $('#time').val();
+            $shot2 =  $('#shot').val();
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+            $shots2 = $('#shots').val();
+
+            $tips = $('#tips').val();
+
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='hidden'>"+$minutes+"</td><td>"+shortTime+"</td><td class='hidden'>"+longTime+"</td><td>"+$shot2+"</td><td class='hidden'>"+$shots2+"</td><td class='hidden'>"+$tips+"</td></tr>");
+//            $('#timeline').append("<tr><td colspan='4'><ul>"+$shots+"</ul></td></tr>");
+
+            $('#myModal').modal('hide');
+        });
+
+//    Removes row from dynamic table
+
+        $('body').on('click', '.remove', function() {
+            $(this).parent().remove();
+        });
+
+
+    //function to add minutes to get the next shots time
 
         function addMinutes(date, minutes) {
 
             return new Date(date.getTime() + minutes*60000);
         }
+    //function to subtracts minutes to get the next shots time
+
         function subtractMinutes(date, minutes) {
 
             return new Date(date.getTime() - minutes*60000);
 
 
         }
+
+
+//        Creates Datatables plugin tables
+
+//        $(document).ready(function(){
+//            $('.tableDisplay').DataTable();
+//            ({
+//
+//                searching: false,
+//                paging: false,
+//                info:     false
+//            });
+//            $('#timeline').DataTable();
+
+//        });
+
+//        This adds shots to the list on the custom shots page
+
+        $('#custShotBtn').on('click', function(){
+            var $shots = $('#custShotsList').val();
+            var $shot = $('#custShots').val();
+            $('#custShotsList').val($shots+"<li>"+$shot+"</li>");
+            $('#custShots').val('');
+
+
+
+        });
+
+//        This shows the custom shots page
+        $('#custModalBtn').on('click', function () {
+
+
+            $("#custShotModal").modal("show");
+
+        });
+
+//        This closes and clears the form for the custom shots page
+        $('#closeCustModal').on('click', function () {
+
+            $('#custShotForm').trigger("reset");
+            $('#custShotsList').val("");
+            $('#custShotModal').modal('hide');
+        })
 
     </script>
 
