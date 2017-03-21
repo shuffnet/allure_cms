@@ -37,6 +37,7 @@ Route::resource('orderItems', 'OrderItemController');
 Route::resource('productServices', 'ProductServicesController');
 Route::resource('packages', 'PackageController');
 Route::resource('shotList', 'ShotListController');
+Route::resource('timeline', 'TimelineController');
 
 
 

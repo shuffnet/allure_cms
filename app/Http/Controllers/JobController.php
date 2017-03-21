@@ -10,6 +10,7 @@ use App\JobType;
 use App\OrderType;
 use App\Role;
 use App\ShotList;
+use App\Timeline;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
@@ -115,6 +116,9 @@ class JobController extends Controller
         //
         $order_types = OrderType::all();
         $job = Job::find($id);
+        $timelines = DB::table('timelines')->where('job_id', $id)->get();
+
+
 
 
         $photogs = Contact::whereHas('contact_type', function($q) {
@@ -156,7 +160,8 @@ class JobController extends Controller
             ->withLead($lead)
             ->withOrder_types($order_types)
             ->withOrders($orders)
-            ->withShots($shotList);
+            ->withShots($shotList)
+            ->withTimelines($timelines);
     }
 
 

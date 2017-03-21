@@ -17,6 +17,7 @@
 
                         <h3>Edit Shot</h3>
                         <hr>
+                        <input id='id'type="text" name="id">
                         <label for="shot">Shot:</label>
                         <input class="form-control" type="text" name="shot" id="shot">
                         <label for="time">Time:</label>
