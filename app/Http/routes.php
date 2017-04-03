@@ -38,6 +38,9 @@ Route::resource('productServices', 'ProductServicesController');
 Route::resource('packages', 'PackageController');
 Route::resource('shotList', 'ShotListController');
 Route::resource('timeline', 'TimelineController');
+Route::resource('jobtimeline', 'JobTimelineController');
+
+
 
 
 

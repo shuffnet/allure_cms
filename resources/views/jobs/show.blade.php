@@ -79,7 +79,7 @@ else {
                     </div>
                     <div class="col col-md-4">
                         <form action="">
-                            {{ csrf_field() }}
+                            {{--{{ csrf_field() }}--}}
                             <select name="photog" id="photog" class="form-control">
                                 <option value="" disabled selected>Select Photographer</option>
                                 @foreach($photogs as $photog)
@@ -136,7 +136,7 @@ else {
 
            $('#add-existing-contact').click(function(){
 
-                var $lead = $("#photog option:selected").val()
+                var $lead = $("#photog option:selected").val();
                 var $role = '1';
                 var $job = '{{$job->id}}';
                 var $token = "{{csrf_token()}}";
@@ -151,12 +151,100 @@ else {
                         '_token' : $token,
 
 
+
                         success: function(data){
                             window.location.reload();
                         }
                     }
                 });
            });
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+
+           $('#btnSaveTimeline').on('click', function () {
+               $('#workingtimeline').removeClass('hidden');
+               var $timeline = $('#workingtimeline').html();
+               var $hours = $('#timepurchased').text();
+               var $job = '{{$job->id}}';
+               var $token = "{{csrf_token()}}";
+
+               $.ajax({
+                   url: '/jobtimeline',
+                   type: 'POST',
+                   data: {
+
+                       'id':$job,
+                       'timeline': $timeline,
+                       'hours': $hours,
+
+
+
+                       success: function(data) {
+                         window.location.reload();
+                       }
+
+
+                   }
+
+
+
+               });
+           });
+
+           $('#btnClearTimeline').on('click', function () {
+               var $timeline = "";
+               var $job = '{{$job->id}}';
+               var $token = "{{csrf_token()}}";
+
+               $.ajax({
+                   url: '/jobtimeline',
+                   type: 'POST',
+                   data: {
+
+                       'id':$job,
+                       'timeline': $timeline,
+
+
+
+                       success: function(data) {
+                           window.location.reload();
+                       }
+
+
+                   }
+
+
+
+               });
+
+           });
+           $('#btnOpenTimeline').on('click', function () {
+            $('#detail').removeClass('hidden');
+
+           });
+
+            $('#btnSaveTimeline2').on('click', function () {
+                var TableData = new Array();
+
+                $('#timeline tr').each(function(row, tr){
+                    TableData[row]={
+                        "taskNo" : $(tr).find('td:eq(0)').text()
+                        , "date" :$(tr).find('td:eq(1)').text()
+                        , "description" : $(tr).find('td:eq(2)').text()
+                        , "task" : $(tr).find('td:eq(3)').text()
+                    }
+                    alert(TableData);
+                });
+//
+
+
+
+
+            });
 
 
 
@@ -170,11 +258,13 @@ else {
     <script>
 
         $('#btnStandard6').on('click', function () {
+            $('#workingtimeline').removeClass('hidden');
 
             ceremonyDate = $('#ceremony-date-id').val();
             ceremonyStartTime = $('#ceremony-time-id').val();
             ceremonyEndTime = $('#ceremony-end-id').val();
             howMuchTime = $('#howMuchTime').val();
+            $('#timepurchased').text(howMuchTime);
             convertToMinutes = howMuchTime * 60;
 
             ceremonyDateTime = ceremonyDate + ',' + ceremonyStartTime;
@@ -207,13 +297,21 @@ else {
 
             groomImmediateFamily = 5;
             groomGroomsmen = 15;
-            groomGettingReady = 15;
+
             groomDetails = 5;
 
             brideImmediateFamily = 5;
             brideBridesmaids = 15;
             brideGettingReady = 30;
-            brideDetails = 30;
+            brideDetails = 15;
+            familyFormals = 15;
+            bridalParty = 15;
+            brideGroom = 15;
+            setupReception = 10;
+            entrance = 150;
+            reception = 0;
+
+
 
 
 
@@ -225,6 +323,324 @@ else {
             $('#timeline').append("<tr style='color: #fff; background: lightblue;'><td class='edit btn-link' >Edit</td><td class='remove  btn-link'>Remove</td><td class='addTime'>"+min+"</td><td>"+ceremonyStartShort+"</td><td class=''>"+ceremonyStartTime+"</td><td> Ceremony Start Time</td></tr>");
 
             $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove  btn-link'>Remove</td><td class='addTime'>5</td><td>"+ceremonyEndShort+"</td><td class='amount'>"+ceremonyEndTime+"</td><td> Ceremony End Time</td></tr>");
+
+//            this sets groom getting ready time
+
+
+            $minutes = groomImmediateFamily;
+            $shot = "Groom with immediate family";
+            $shots = "<li>Groom with mom</li><li>Groom with dad</li><li>Groom with mom & dad</li>";
+            $tips = "Family members and siblings families should be ready";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td id='detail' class='hidden '>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+                       $minutes = groomGroomsmen;
+            $shot = "Groom alone and with groomsmen";
+            $shots = "<li>Groom alone</li><li>Groom with each groomsmen</li><li>Groom with all groomsmen</li>";
+            $tips = "Groomsmen need to be ready and on time. Bring sunglasses";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+            $minutes = groomDetails;
+            $shot = "Groom details";
+            $shots = "<li>Groom details</li>";
+            $tips = "Groom details, cuff links, etc";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+            $minutes = brideImmediateFamily;
+            $shot = "Bride with immediate family";
+            $shots = "<li>Bride with mom</li>";
+            $tips = "tips for bride and immediate family";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+// *****************Bride with bridesmaids****************************
+            $minutes = brideBridesmaids;
+            $shot = "Bride alone and with bridesmaids";
+            $shots = "<li>Bride alone</li>";
+            $tips = "tips for bride and bridesmaids";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+//******************Bride getting ready*********************
+            $minutes = brideGettingReady;
+            $shot = "Bride Getting Ready";
+            $shots = "<li>Bride getting in dress</li>";
+            $tips = "tips for bride getting ready";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+
+
+
+//*******************Bride Details***************************
+
+
+            $minutes = brideDetails;
+            $shot = "Bride details";
+            $shots = "<li>Bride with her details</li>";
+            $tips = "tips for bride and her details";
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:first td:nth-child(4)').text();
+            setShotTime = $('#timeline tr:first td:nth-child(2)').text();
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = subtractMinutes(setDateTime, $minutes);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+//            24hr Time
+            longTime = shortHour + ":" + shortMin;
+//            12hr time
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute: '2-digit'});
+
+            $('#timeline').prepend("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+            $('#timeline').prepend("<tr style='color: black; background: lightgreen;'><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+0+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>Photographer Arrive</td><td class='hidden'></td><td class='hidden'></td></tr>");
+
+
+
+//**********Post wedding******************
+
+            $minutes = familyFormals;
+            $shot =  "Family Formals";
+            $shots = "Shots of Family";
+            $tips = "Tips for family shots";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+//**************Bridal Party**************************
+
+            $minutes = bridalParty;
+            $shot =  "Bridal Party";
+            $shots = "Shots with bridal party";
+            $tips = "Tips for shots with bridal party";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+//**************Bride and Groom**************************
+
+            $minutes = brideGroom;
+            $shot =  "Bride and Groom";
+            $shots = "Bride and groom shots";
+            $tips = "Tips for shots with bride and groom";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+            //**************Setup for reception**************************
+
+            $minutes = setupReception;
+            $shot =  "Pictures complete";
+            $shots = "Setup for reception";
+            $tips = "Tips for setup for reception";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+
+
+
+
+            //**************Reception**************************
+
+            $minutes = entrance;
+            $shot =  "Reception Entrance";
+            $shots = "Reception pics";
+            $tips = "Tips for shots at reception";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+//**************Reception**************************
+
+            $minutes = reception;
+            $shot =  "Reception end";
+            $shots = "Shots at reception";
+            $tips = "Tips for shots at reception";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr><td class='edit btn-link' >Edit</td><td class='remove btn btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
+
+//**************Photographers leave**************************
+
+            $minutes = reception;
+            $shot =  "Photographers Leave";
+            $shots = "";
+            $tips = "";
+
+            setDate = $('#ceremony-date-id').val();
+            setStartTime = $('#timeline tr:last td:nth-child(5)').text();
+            setShotTime = $('#timeline tr:last td:nth-child(3)').text();
+
+            setDateTime = setDate + ',' + setStartTime;
+            setDateTime = new Date(setDateTime);
+            setNewTime = addMinutes(setDateTime, setShotTime);
+
+            shortHour = setNewTime.getHours();
+            shortMin = setNewTime.getMinutes();
+            longTime = shortHour +":"+ shortMin;
+            shortTime = setNewTime.toLocaleTimeString(navigator.language, {hour: '2-digit', minute:'2-digit'});
+
+            $('#timeline').append("<tr style='color: black; background: red;'><td class='edit btn-link' >Edit</td><td class='remove  btn-link'>Remove</td><td class='addTime'>"+$minutes+"</td><td>"+shortTime+"</td><td class=''>"+longTime+"</td><td>"+$shot+"</td><td class='hidden'>"+$shots+"</td><td class='hidden'>"+$tips+"</td></tr>");
 
 
 
@@ -240,10 +656,10 @@ else {
             $('#purchased').html("Purchased "+convertToMinutes);
 
 
+            $('#btnSaveTimeline').removeClass('hidden');
 
 
-
-        })
+        });
 
         $('#btnCustomAdd').on('click', function () {
             ceremonyDate = $('#ceremony-date-id').val();
@@ -335,7 +751,7 @@ else {
 
 
         $('#shotListTable .addPre').on('click',function() {
-            var $row = $(this).closest("tr");       // Finds the closest row <tr>
+            $row = $(this).closest("tr");       // Finds the closest row <tr>
             $minutes = $row.find("td:nth-child(2)").text();
             $shot = $row.find("td:nth-child(3)").text();
             $shots = $row.find("td:nth-child(4)").html();
@@ -343,10 +759,6 @@ else {
             setDate = $('#ceremony-date-id').val();
             setStartTime = $('#timeline tr:first td:nth-child(4)').text();
             setShotTime = $('#timeline tr:first td:nth-child(2)').text();
-
-
-
-
             setDateTime = setDate + ',' + setStartTime;
             setDateTime = new Date(setDateTime);
             setNewTime = subtractMinutes(setDateTime, $minutes);
@@ -428,15 +840,20 @@ else {
 
 
         });
-//        This is the edit button on the timeline table
+
+
+//        This is the edit link on the timeline table
 
         $('body').on('click', '.edit', function() {
+           ceremonyStartTimeRow = $("tr:contains('Ceremony Start')");
+           ceremonyStartTime = ceremonyStartTimeRow.find("td:nth-child(5)").text();
             $row_index = $(this).parent().index();
             $("#myModal").modal("show");
             $shot = $(this).parent().find("td:nth-child(6)").text();
             $time = $(this).parent().find("td:nth-child(3)").text();
             $shots = $(this).parent().find("td:nth-child(7)").text();
             $tips = $(this).parent().find("td:nth-child(8)").text();
+            setStartTime = $(this).parent().find("td:nth-child(5)").text();
             $('#shot').val($shot);
             $('#time').val($time);
             $('#shots').val($shots);
@@ -462,7 +879,7 @@ else {
             $tips = $('#tips').val();
 
 
-
+//This appends to after ceremony
 
             if (ceremonyStartTime >= setStartTime)
             {
@@ -474,6 +891,7 @@ else {
                 setNewTime = subtractMinutes(setDateTime, setShotTime);
 
             }else{
+//This prepends before ceremony
                 setStartTime = $('#timeline tr:eq('+$prevRow+') td:nth-child(5)').text();
 
 

@@ -3,21 +3,24 @@
 
 <div class="row">
 
-    <div class="col col-md-6 col-md-offset-4">
-        @if( ! empty($timelines))
+    <div class="col col-md-10 col-md-offset-2">
+        @if( ! empty($job->timeline))
         <h4>Timelines for this job</h4>
-        <table class="table">
 
-                @foreach($timelines as $timeline)
-                  <?php
-                    $time = new Carbon($timeline->jobDate);
-                    ?>
+            <div id="workingtimeline">
 
-                    <td><td>{{$timeline->id}}</td><td>{{$time->format('l F jS \\  Y')}}</td><td class="btn btn-link">Open</td></tr>
+                {!! htmlspecialchars_decode($job->timeline, ENT_QUOTES) !!}
 
-                @endforeach
-        </table>
-            @else
+            </div>
+
+            <div id="btnSaveTimeline" class="btn btn-success">Save</div>
+            <div id="btnClearTimeline" class="btn btn-danger">Clear</div>
+            <div id="btnOpenTimeline" class="btn btn-warning">Open</div>
+
+
+
+
+        @else
                     <h4>No Time lines for this job: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
 
 
@@ -26,7 +29,7 @@
 </div>
     <div class="row">
 
-            <div id="timelineshots" class="hidden col col-md-4 col-md-offset-2">
+            <div id="timelineshots" class="hidden col col-md-4 col-md-offset-1">
 
                 <h3>Shots</h3>
                 <div class="btn btn-default" id="custModalBtn">Add Custom Shot</div>
@@ -50,16 +53,30 @@
 
             </div>
 
-            <div id="workingtimeline" class="col col-md-6  ">
-                <h4>Working Time Line</h4>
-                <table class="tableDisplay table" id="timeline">
+            <div id="" class="col col-md-6  ">
 
 
 
-                </table>
+
+
+                <div id="workingtimeline">
+                    <table class="tableDisplay table" id="timeline">
+
+
+
+                    </table>
+                </div>
+                <div id="btnSaveTimeline" class="btn btn-success hidden">Save Me</div>
+                <div id="timepurchased"></div>
                 <div id="purchased"></div>
                 <div id="totaltime"></div>
+
             </div>
+        <div id="btnSaveTimeline" class="btn btn-success hidden">Save</div>
+        <div id="btnSaveTimeline2" class="btn btn-success ">Save2</div>
+
+
+
 
     </div>
 

@@ -116,7 +116,7 @@ class JobController extends Controller
         //
         $order_types = OrderType::all();
         $job = Job::find($id);
-        $timelines = DB::table('timelines')->where('job_id', $id)->get();
+
 
 
 
@@ -160,8 +160,8 @@ class JobController extends Controller
             ->withLead($lead)
             ->withOrder_types($order_types)
             ->withOrders($orders)
-            ->withShots($shotList)
-            ->withTimelines($timelines);
+            ->withShots($shotList);
+
     }
 
 
@@ -232,6 +232,8 @@ class JobController extends Controller
 
 
     }
+
+
 
 
 }

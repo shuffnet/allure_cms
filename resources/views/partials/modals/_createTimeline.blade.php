@@ -14,8 +14,8 @@
                 <div class="modal-body">
                     <div class="" id="newTimeline">
                         <div class="input-group">
-                            <label for="howMuchTime"></label>
-                            <input id="howMuchTime" name="howMuchTime" type="text"><small>Put in number of hours purchased</small>
+                            <label for="howMuchTime">Number of hours purchased:</label>
+                            <input class="form-control" id="howMuchTime" name="howMuchTime" type="text">
                         </div>
                         <div class="input-group" >
                             <label for='ceremony-date'> Ceremony Date:</label>
