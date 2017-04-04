@@ -130,6 +130,7 @@ else {
 
 
     <script type="text/javascript">
+
        var ceremonyStartTime = undefined;
 
         $(document).ready(function(){
@@ -228,23 +229,38 @@ else {
            });
 
             $('#btnSaveTimeline2').on('click', function () {
+
+
+
+
+
+                alert(storeTblValues()) ;
+
+
+            });
+
+
+            function storeTblValues()
+
+            {
                 var TableData = new Array();
 
                 $('#timeline tr').each(function(row, tr){
                     TableData[row]={
-                        "taskNo" : $(tr).find('td:eq(0)').text()
-                        , "date" :$(tr).find('td:eq(1)').text()
-                        , "description" : $(tr).find('td:eq(2)').text()
-                        , "task" : $(tr).find('td:eq(3)').text()
+                        "duration" : $(tr).find('td:eq(2)').text()
+                        , "time" :$(tr).find('td:eq(4)').text()
+                        , "shot" : $(tr).find('td:eq(5)').text()
+                        , "shots" : $(tr).find('td:eq(6)').html()
                     }
-                    alert(TableData);
                 });
-//
+//                TableData.shift();  // first row will be empty - so remove
+                TableData = $.toJSON(TableData);
+
+                return TableData;
+
+            }
 
 
-
-
-            });
 
 
 

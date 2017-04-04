@@ -3,12 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="eba7bdc1-f5de-47c5-b619-ef3d7baa2a9d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/Controllers/JobController.php" afterPath="$PROJECT_DIR$/app/Http/Controllers/JobController.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/Http/routes.php" afterPath="$PROJECT_DIR$/app/Http/routes.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/jobs/show.blade.php" afterPath="$PROJECT_DIR$/resources/views/jobs/show.blade.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/main.blade.php" afterPath="$PROJECT_DIR$/resources/views/main.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/partials/jobs/_jobTimeline.blade.php" afterPath="$PROJECT_DIR$/resources/views/partials/jobs/_jobTimeline.blade.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/resources/views/partials/modals/_createTimeline.blade.php" afterPath="$PROJECT_DIR$/resources/views/partials/modals/_createTimeline.blade.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -37,27 +33,47 @@
       <file leaf-file-name="show.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/resources/views/jobs/show.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="421">
-              <caret line="239" column="37" lean-forward="false" selection-start-line="239" selection-start-column="37" selection-end-line="239" selection-end-column="37" />
+            <state relative-caret-position="349">
+              <caret line="251" column="64" lean-forward="true" selection-start-line="251" selection-start-column="64" selection-end-line="251" selection-end-column="64" />
               <folding>
-                <element signature="e#4624#4765#0#HTML" expanded="false" />
-                <element signature="e#4827#5527#0#HTML" expanded="false" />
-                <element signature="e#5589#6110#0#HTML" expanded="false" />
-                <element signature="e#6170#6233#0#HTML" expanded="false" />
-                <element signature="e#27842#31053#0#HTML" expanded="false" />
-                <element signature="e#31115#32602#0#HTML" expanded="false" />
-                <element signature="e#32665#34253#0#HTML" expanded="false" />
-                <element signature="e#34302#35622#0#HTML" expanded="false" />
-                <element signature="e#35672#36992#0#HTML" expanded="false" />
-                <element signature="e#37102#37932#0#HTML" expanded="false" />
-                <element signature="e#38038#40559#0#HTML" expanded="false" />
-                <element signature="e#41541#41757#0#HTML" expanded="false" />
-                <element signature="e#42367#42489#0#HTML" expanded="false" />
-                <marker date="1491248712693" expanded="true" signature="9718:9753" ph="..." />
-                <marker date="1491248712693" expanded="true" signature="18936:18973" ph="..." />
-                <marker date="1491248712693" expanded="true" signature="27046:27076" ph="..." />
-                <marker date="1491248712693" expanded="true" signature="30118:30153" ph="..." />
+                <element signature="e#4625#4766#0#HTML" expanded="false" />
+                <element signature="e#5590#6111#0#HTML" expanded="false" />
+                <element signature="e#6171#6234#0#HTML" expanded="false" />
+                <element signature="e#28076#31287#0#HTML" expanded="false" />
+                <element signature="e#31349#32836#0#HTML" expanded="false" />
+                <element signature="e#32899#34487#0#HTML" expanded="false" />
+                <element signature="e#34536#35856#0#HTML" expanded="false" />
+                <element signature="e#35906#37226#0#HTML" expanded="false" />
+                <element signature="e#37336#38166#0#HTML" expanded="false" />
+                <element signature="e#38272#40793#0#HTML" expanded="false" />
+                <element signature="e#41775#41991#0#HTML" expanded="false" />
+                <element signature="e#42601#42723#0#HTML" expanded="false" />
+                <marker date="1491252912910" expanded="false" signature="4828:5528" ph="{...}" />
+                <marker date="1491252912910" expanded="true" signature="9952:9987" ph="..." />
+                <marker date="1491252912910" expanded="true" signature="19170:19207" ph="..." />
+                <marker date="1491252912910" expanded="true" signature="27280:27310" ph="..." />
+                <marker date="1491252912910" expanded="true" signature="30352:30387" ph="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="create.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/jobs/create.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1117">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="main.blade.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/main.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="482">
+              <caret line="95" column="16" lean-forward="false" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -66,7 +82,7 @@
         <entry file="file://$PROJECT_DIR$/resources/views/partials/modals/_createTimeline.blade.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-45">
-              <caret line="17" column="104" lean-forward="true" selection-start-line="17" selection-start-column="104" selection-end-line="17" selection-end-column="104" />
+              <caret line="17" column="104" lean-forward="false" selection-start-line="17" selection-start-column="104" selection-end-line="17" selection-end-column="104" />
               <folding />
             </state>
           </provider>
@@ -108,7 +124,7 @@
         <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_29_153254_Add_timeline_to_job.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="620">
-              <caret line="32" column="11" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="32" selection-end-column="11" />
+              <caret line="32" column="11" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="32" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -118,7 +134,7 @@
         <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_31_192909_add_job_hours_col.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
-              <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -129,26 +145,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="250">
               <caret line="10" column="0" lean-forward="false" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_editTimeline.blade.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/resources/views/partials/modals/_editTimeline.blade.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="400">
-              <caret line="19" column="60" lean-forward="false" selection-start-line="19" selection-start-column="60" selection-end-line="19" selection-end-column="60" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="TimelineController.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/Http/Controllers/TimelineController.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1175">
-              <caret line="50" column="28" lean-forward="false" selection-start-line="50" selection-start-column="28" selection-end-line="50" selection-end-column="28" />
               <folding />
             </state>
           </provider>
@@ -206,12 +202,12 @@
         <option value="$PROJECT_DIR$/database/migrations/2017_03_29_153254_Add_timeline_to_job.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/JobtimelineController.php" />
         <option value="$PROJECT_DIR$/app/Http/routes.php" />
-        <option value="$PROJECT_DIR$/resources/views/main.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/JobController.php" />
         <option value="$PROJECT_DIR$/database/migrations/2017_03_31_192909_add_job_hours_col.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/modals/_createTimeline.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/JobTimelineController.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/jobs/_jobTimeline.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/main.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/jobs/show.blade.php" />
       </list>
     </option>
@@ -265,6 +261,20 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="vendor" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -393,6 +403,38 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="resources" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="allure_cms" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -584,12 +626,12 @@
       <workItem from="1489588561169" duration="21981000" />
       <workItem from="1489695090695" duration="20071000" />
       <workItem from="1490120817993" duration="23186000" />
-      <workItem from="1490897647722" duration="24226000" />
+      <workItem from="1490897647722" duration="28801000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="510842000" />
+    <option name="totallyTimeSpent" value="515417000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -657,20 +699,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/migrations/2017_02_22_192215_create_customer__customer_type.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="22" column="0" lean-forward="true" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/contacts/create.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="472">
-          <caret line="25" column="12" lean-forward="false" selection-start-line="25" selection-start-column="12" selection-end-line="25" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ContactController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -952,14 +980,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/main.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="8" column="57" lean-forward="false" selection-start-line="8" selection-start-column="57" selection-end-line="8" selection-end-column="57" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/partials/modals/_editTimeline.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -987,7 +1007,7 @@
     <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_29_153254_Add_timeline_to_job.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="620">
-          <caret line="32" column="11" lean-forward="true" selection-start-line="29" selection-start-column="8" selection-end-line="32" selection-end-column="11" />
+          <caret line="32" column="11" lean-forward="false" selection-start-line="29" selection-start-column="8" selection-end-line="32" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -995,7 +1015,7 @@
     <entry file="file://$PROJECT_DIR$/resources/views/partials/modals/_createTimeline.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-45">
-          <caret line="17" column="104" lean-forward="true" selection-start-line="17" selection-start-column="104" selection-end-line="17" selection-end-column="104" />
+          <caret line="17" column="104" lean-forward="false" selection-start-line="17" selection-start-column="104" selection-end-line="17" selection-end-column="104" />
           <folding />
         </state>
       </provider>
@@ -1003,7 +1023,7 @@
     <entry file="file://$PROJECT_DIR$/database/migrations/2017_03_31_192909_add_job_hours_col.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="250">
-          <caret line="20" column="0" lean-forward="true" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1034,28 +1054,52 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/vendor/jquery-json-master/jquery-json-master/test/jquery.json.test.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/jobs/create.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1117">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/main.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="482">
+          <caret line="95" column="16" lean-forward="false" selection-start-line="95" selection-start-column="16" selection-end-line="95" selection-end-column="16" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/jobs/show.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="421">
-          <caret line="239" column="37" lean-forward="false" selection-start-line="239" selection-start-column="37" selection-end-line="239" selection-end-column="37" />
+        <state relative-caret-position="349">
+          <caret line="251" column="64" lean-forward="true" selection-start-line="251" selection-start-column="64" selection-end-line="251" selection-end-column="64" />
           <folding>
-            <element signature="e#4624#4765#0#HTML" expanded="false" />
-            <element signature="e#4827#5527#0#HTML" expanded="false" />
-            <element signature="e#5589#6110#0#HTML" expanded="false" />
-            <element signature="e#6170#6233#0#HTML" expanded="false" />
-            <element signature="e#27842#31053#0#HTML" expanded="false" />
-            <element signature="e#31115#32602#0#HTML" expanded="false" />
-            <element signature="e#32665#34253#0#HTML" expanded="false" />
-            <element signature="e#34302#35622#0#HTML" expanded="false" />
-            <element signature="e#35672#36992#0#HTML" expanded="false" />
-            <element signature="e#37102#37932#0#HTML" expanded="false" />
-            <element signature="e#38038#40559#0#HTML" expanded="false" />
-            <element signature="e#41541#41757#0#HTML" expanded="false" />
-            <element signature="e#42367#42489#0#HTML" expanded="false" />
-            <marker date="1491248712693" expanded="true" signature="9718:9753" ph="..." />
-            <marker date="1491248712693" expanded="true" signature="18936:18973" ph="..." />
-            <marker date="1491248712693" expanded="true" signature="27046:27076" ph="..." />
-            <marker date="1491248712693" expanded="true" signature="30118:30153" ph="..." />
+            <element signature="e#4625#4766#0#HTML" expanded="false" />
+            <element signature="e#5590#6111#0#HTML" expanded="false" />
+            <element signature="e#6171#6234#0#HTML" expanded="false" />
+            <element signature="e#28076#31287#0#HTML" expanded="false" />
+            <element signature="e#31349#32836#0#HTML" expanded="false" />
+            <element signature="e#32899#34487#0#HTML" expanded="false" />
+            <element signature="e#34536#35856#0#HTML" expanded="false" />
+            <element signature="e#35906#37226#0#HTML" expanded="false" />
+            <element signature="e#37336#38166#0#HTML" expanded="false" />
+            <element signature="e#38272#40793#0#HTML" expanded="false" />
+            <element signature="e#41775#41991#0#HTML" expanded="false" />
+            <element signature="e#42601#42723#0#HTML" expanded="false" />
+            <marker date="1491252912910" expanded="false" signature="4828:5528" ph="{...}" />
+            <marker date="1491252912910" expanded="true" signature="9952:9987" ph="..." />
+            <marker date="1491252912910" expanded="true" signature="19170:19207" ph="..." />
+            <marker date="1491252912910" expanded="true" signature="27280:27310" ph="..." />
+            <marker date="1491252912910" expanded="true" signature="30352:30387" ph="..." />
           </folding>
         </state>
       </provider>
