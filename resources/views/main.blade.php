@@ -93,7 +93,9 @@
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
-<script src="../js/jquery.json.min.js"></script>
+<script src="/js/jquery.json.min.js"></script>
+
+
 @yield('java')
 </body>
 </html>

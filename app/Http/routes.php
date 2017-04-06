@@ -37,8 +37,11 @@ Route::resource('orderItems', 'OrderItemController');
 Route::resource('productServices', 'ProductServicesController');
 Route::resource('packages', 'PackageController');
 Route::resource('shotList', 'ShotListController');
+Route::get('jobs/timeline/show/{jobid}/{timelineId}',['uses'=>'JobTimelineController@jobTimelineShow', 'as' => 'job_timeline.jobtimelineShow']);
 Route::resource('timeline', 'TimelineController');
-Route::resource('jobtimeline', 'JobTimelineController');
+Route::get('jobs/timeline/index/{jobid}', ['uses'=>'JobTimelineController@jobTimelineIndex', 'as' => 'job_timeline.jobtimelineIndex']);
+Route::resource('jobtimeline',  'JobTimelineController');
+
 
 
 

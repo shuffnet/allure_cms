@@ -33,5 +33,8 @@ class Job extends Model
 
         return $this->hasMany('App\Order');
     }
+    public function timeline(){
+        return $this->hasMany('App\Timeline');
+    }
 
 }

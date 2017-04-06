@@ -1,3 +1,35 @@
+<h4>Timelines for this job</h4>
+
+<div id="workingtimeline">
+
+    @foreach($job->timeline as $timeline)
+        <?php
+        $timelineDate = new Carbon($timeline->jobDate);
+        $timelineDate = $timelineDate->format('l F jS \\  Y');
+        ?>
+
+
+        <div class="row">
+            <div class="col col-md-1 text-left">
+                {!! Form::open(['route' => ['timeline.destroy', $timeline->id], 'method'=>'DELETE']) !!}
+
+                {{Form::submit('Delete', array('class'=> 'btn btn-link btn-sm'))}}
+                {!! Form::close() !!}
+
+            </div>
+            <div class="col col-md-4">
+                <h3>{{$timeline->name }}<div class="btn btn-link btn-lg">{{$timelineDate}}</div></h3>
+            </div>
+
+
+        </div>
+    @endforeach
+
+    <h4>Create another Timeline: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
+
+
+
+</div>
 
 <div class="container">
     <!-- Modal -->

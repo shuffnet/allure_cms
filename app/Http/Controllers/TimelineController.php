@@ -6,6 +6,8 @@ use App\Timeline;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\Redirect;
+use Session;
 
 class TimelineController extends Controller
 {
@@ -33,11 +35,22 @@ class TimelineController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return string
      */
     public function store(Request $request)
     {
         //
+        $jobDate = $request->jobDate;
+        $job_id = $request->id;
+        $name = $request->name;
+
+        $timeline = new Timeline;
+        $timeline->job_id = $job_id;
+        $timeline->jobDate =$jobDate;
+        $timeline->name = $name;
+        $timeline->save();
+        $id = $timeline->id;
+        return $id;
     }
 
     /**
@@ -48,7 +61,8 @@ class TimelineController extends Controller
      */
     public function show($id)
     {
-        $timeline = Timeline::find($id);
+//        $timeline = Timeline::find($id);
+
     }
 
     /**
@@ -83,5 +97,11 @@ class TimelineController extends Controller
     public function destroy($id)
     {
         //
+        $timeline = Timeline::find($id);
+        $timeline->delete();
+//        $job->role()->sync(array());
+        Session::flash('success', 'The Timeline was successfully deleted');
+
+        return Redirect::back();
     }
 }

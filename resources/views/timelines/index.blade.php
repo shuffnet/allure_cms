@@ -37,16 +37,16 @@ else {
 
                             </div>
 
-                           <div class="col col-md-4">
+                            <div class="col col-md-4">
 
-                                   {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method'=>'DELETE']) !!}
+                                {!! Form::open(['route' => ['jobs.destroy', $job->id], 'method'=>'DELETE']) !!}
 
-                                   {{Form::submit('Delete', array('class'=> 'btn btn-link btn-sm'))}}
-                                   {!! Form::close() !!}
+                                {{Form::submit('Delete', array('class'=> 'btn btn-link btn-sm'))}}
+                                {!! Form::close() !!}
 
 
 
-                           </div>
+                            </div>
 
                         </div>
 
@@ -70,7 +70,7 @@ else {
                         </nav>
 
                 </div>
-  @include('partials.jobs._jobNav')
+                @include('partials.jobs._jobNav')
 
                 @else
                     @include('partials.jobs._jobNav')
@@ -97,7 +97,7 @@ else {
 
 
 
-    {{--This may have to be added back                --}}{{--</nav>--}}
+                    {{--This may have to be added back                --}}{{--</nav>--}}
 
 
             </div> <!--End Job Name Column-->
@@ -113,17 +113,68 @@ else {
 
     </div> <!--End of Top column with job and edit-->
 
+    <div class="row">
 
-@include('partials.jobs._overview')
-@include('partials.jobs._timeline')
+        <div class="col col-md-10 col-md-offset-2">
+            @if (count($job->timeline) > 0)
+
+                <h4>Timelines for this job</h4>
+
+                <div id="workingtimeline">
+
+                    @foreach($job->timeline as $timeline)
+                        <?php
+                        $timelineDate = new Carbon($timeline->jobDate);
+                        $timelineDate = $timelineDate->format('l F jS \\  Y');
+                        ?>
 
 
+                        <div class="row">
+                            <div class="col col-md-1 text-left">
+                                {!! Form::open(['route' => ['timeline.destroy', $timeline->id], 'method'=>'DELETE']) !!}
+
+                                {{Form::submit('Delete', array('class'=> 'btn btn-link btn-sm'))}}
+                                {!! Form::close() !!}
+
+                            </div>
+                            <div class="col col-md-4">
+                                <h3>{{$timeline->name }}<div class="btn btn-link btn-lg">{{$timelineDate}}</div></h3>
+                            </div>
+
+
+                        </div>
+                    @endforeach
+
+                    <h4>Create another Timeline: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
+
+
+
+                </div>
+            @else
+                <h4>No Time lines for this job: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
+
+
+            @endif
+
+
+
+
+
+
+
+            {{--{!! htmlspecialchars_decode($job->timeline, ENT_QUOTES) !!}--}}
+        </div>
+
+
+
+
+</div>
 
 @endsection
 @section('java')
 
 
-@include('partials.js._timeline')
+    @include('partials.js._timeline')
 
 
 
