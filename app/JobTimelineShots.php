@@ -8,5 +8,5 @@ class JobTimelineShots extends Model
 {
     //
     protected $table = 'jobtimelineshots';
-    protected $fillable = ['job_id', 'duration', 'time', 'shot', 'shots', 'tips'];
+    protected $fillable = ['job_id', 'duration', 'time','shortTime ','shot', 'tips', 'timeline_id'];
 }

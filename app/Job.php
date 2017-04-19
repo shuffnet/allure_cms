@@ -36,5 +36,9 @@ class Job extends Model
     public function timeline(){
         return $this->hasMany('App\Timeline');
     }
+    public function get_shots()
+    {
+        return $this->hasManyThrough('App\Timeline', 'App\JobTimelineShots');
+    }
 
 }

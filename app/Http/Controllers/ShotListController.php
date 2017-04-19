@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\ShotList;
+use App\ShotListShots;
+use Illuminate\Support\Facades\Redirect;
 use Session;
 use Illuminate\Http\Request;
 
@@ -29,6 +31,23 @@ class ShotListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function ajaxGetShot($id)
+    {
+//       $shots = ShotList::all();
+        $shot = ShotlistShots::all();
+
+
+        return ($shot);
+
+
+    }
+    public function ajaxGetShots($id)
+    {
+
+
+
+
+    }
     public function create()
     {
         //
@@ -57,15 +76,30 @@ class ShotListController extends Controller
 
         $shot = new ShotList();
         $shot->name = $request->name;
-        $shot->shots = $request->shots;
+
         $shot->time = $request->time;
 
         $shot->tips = $request->tips;
-        $shot->order = $request->order;
+
 
 
 
         $shot->save();
+        if ($request->shots){
+            foreach ($request->shots as $shotsB) {
+                $shots  = new ShotListShots();
+                $shots->shot = $shotsB;
+                $shots->shot_list_id = $shot->id;
+                $shots->save();
+
+
+            }
+
+    }
+
+
+
+
 
         Session::flash('success', 'The Shot was successfully saved!');
 
@@ -92,6 +126,10 @@ class ShotListController extends Controller
     public function edit($id)
     {
         //
+       $shot = ShotList::find($id);
+       return view('shotList.edit')->withShot($shot);
+
+//        return redirect()->route('shotList.edit');
     }
 
     /**
@@ -101,9 +139,41 @@ class ShotListController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function update(Request $request, $id)
     {
         //
+        $shot = ShotList::find($id);
+
+        $shot->name = $request->name;
+
+        $shot->time = $request->time;
+
+        $shot->tips = $request->tips;
+
+
+
+
+        $shot->save();
+        if ($request->shots) {
+
+            foreach ($request->shots as $shotsB) {
+                $shots  = new ShotListShots();
+                $shots->shot = $shotsB;
+                $shots->shot_list_id = $shot->id;
+                $shots->save();
+            }
+
+}
+
+
+
+
+
+
+
+
+
     }
 
     /**
@@ -115,5 +185,15 @@ class ShotListController extends Controller
     public function destroy($id)
     {
         //
+
+
+    }
+    public function deleteShot($id)
+    {
+        $shot = ShotList::find($id);
+        $shot->delete();
+        $shot->get_shots()->delete(array());
+        return Redirect::back();
+
     }
 }

@@ -36,11 +36,24 @@ Route::resource('order_type', 'OrderTypeController');
 Route::resource('orderItems', 'OrderItemController');
 Route::resource('productServices', 'ProductServicesController');
 Route::resource('packages', 'PackageController');
+Route::get('ajaxGetShot/{id}',['uses'=>'ShotListController@ajaxGetShot', 'as' => 'ajaxGetShot.show']);
+
+Route::get('shotDelete/{id}',['uses'=>'ShotListController@deleteShot', 'as' => 'shotDelete.delete']);
+
 Route::resource('shotList', 'ShotListController');
+Route::get('jobs/timeline/create/{jobid}/{timelineId}',['uses'=>'JobTimelineController@jobTimelineCreate', 'as' => 'job_timeline.jobtimelineCreate']);
+Route::get('shotDelete/{id}',['uses'=>'ShotListController@deleteShot', 'as' => 'shotDelete.delete']);
 Route::get('jobs/timeline/show/{jobid}/{timelineId}',['uses'=>'JobTimelineController@jobTimelineShow', 'as' => 'job_timeline.jobtimelineShow']);
+Route::get('jobs/timeline/addShot/{jobid}/{timelineId}/{shotid}',['uses'=>'JobTimelineController@jobTimelineAddShot', 'as' => 'job_timeline.jobtimelineAddShot']);
+
+Route::get('createtimeline/{id}',['uses'=>'TimelineController@createTimeline', 'as' => 'timeline.createTimeline']);
+
+
 Route::resource('timeline', 'TimelineController');
 Route::get('jobs/timeline/index/{jobid}', ['uses'=>'JobTimelineController@jobTimelineIndex', 'as' => 'job_timeline.jobtimelineIndex']);
 Route::resource('jobtimeline',  'JobTimelineController');
+Route::get('shotListDelete/{id}',['uses'=>'ShotListShotsController@deleteShot', 'as' => 'shotListDelete.delete']);
+Route::resource('shotListShots', 'ShotListShotsController');
 
 
 

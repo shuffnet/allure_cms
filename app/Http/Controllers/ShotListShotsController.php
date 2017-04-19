@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\JobTimelineShots;
-use App\Timeline;
+use App\ShotListShots;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Redirect;
 use Session;
+use Illuminate\Support\Facades\Redirect;
 
-class TimelineController extends Controller
+class ShotListShotsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,50 +26,20 @@ class TimelineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createTimeline($id)
-    {
-        //
-//        return $id;
-        return view('jobs.timeline.create')
-            ->withJob($id);
-    }
     public function create()
     {
         //
-
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return string
+     * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
         //
-        $jobDate = $request->jobDate;
-        $job_id = $request->job_id;
-        $name = $request->name;
-        $time = $request->ceremonytime;
-
-
-        $timeline = new Timeline;
-        $timeline->job_id = $job_id;
-        $timeline->jobDate =$jobDate;
-        $timeline->name = $name;
-        $timeline->save();
-        $id = $timeline->id;
-
-        $shot = new JobTimelineShots();
-        $shot->timeline_id = $id;
-
-        $shot->shot = "Ceremony";
-
-        $shot->save();
-
-
-        return redirect()->route('job_timeline.jobtimelineCreate', ['jobid' => $job_id, 'timelineId'=> $id]);
     }
 
     /**
@@ -81,7 +50,8 @@ class TimelineController extends Controller
      */
     public function show($id)
     {
-//        $timeline = Timeline::find($id);
+        //
+
 
     }
 
@@ -116,12 +86,18 @@ class TimelineController extends Controller
      */
     public function destroy($id)
     {
-        //
-        $timeline = Timeline::find($id);
-        $timeline->delete();
-//        $job->role()->sync(array());
-        Session::flash('success', 'The Timeline was successfully deleted');
 
-        return Redirect::back();
+//        Session::flash('success', 'The Shot was successfully deleted');
+        //
     }
+
+    public function deleteShot($id)
+    {
+        $shot = ShotListShots::find($id);
+        $shot->delete();
+        return Redirect::back();
+
+    }
+
+
 }

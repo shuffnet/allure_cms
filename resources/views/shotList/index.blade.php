@@ -6,28 +6,30 @@
         <div class="col col-md-4">
             <h3>Shots</h3>
 
-                <table>
+                <table class="table">
 
 
                     @foreach($shots as $shot)
-                        <tr class="well"><td>{{$shot->name}}</td><td><div class="btn btn-link">Pre</div></td><td><div class="btn btn-link">Post</div></td></tr>
-                        <tr><td class=""><ul class="">{!! $shot->shots !!}</ul></td><td class="hidden">{{$shot->tips}}</td><td class="hidden">{{$shot->time}}</td></tr>
-
-
-
-
+                        <tr  class="well">
+                            <td style=""><a href="{{ route('shotList.edit', $shot->id)}}">Edit</a></td>
+                            <td><a href="{{ route('shotDelete.delete', $shot->id)}}">Delete</a></td>
+                            <td>{{$shot->name}}</td>
+                        </tr>
+                        <tr class="hidden"><td class=""><ul class="">@foreach ($shot->get_shots as $shotList)<li>{{$shotList->shot}}</li>@endforeach</ul></td><td class="hidden">{{$shot->tips}}</td><td class="hidden">{{$shot->time}}</td></tr>
 
 
 
                     @endforeach
+
                 </table>
+
 
 
 
 
         </div>
 
-        <div class="col col-md-4 ">
+        <div id="" class="col col-md-4 ">
 
             <h3>Create New Group</h3>
             <hr>
@@ -35,15 +37,18 @@
 
             {{Form::label('name','Group Name:')}}
             {{Form::text('name', null, array('class'=> 'form-control'))}}
-            <input type="text" id="shot"><div id="shotbtn" class="btn btn-default">Add</div>
-            {{Form::label('shots','Shots:')}}
-            {{Form::textarea('shots', null, array( 'id'=>'shots','class'=> 'form-control'))}}
+            <div id="shotbtn" class="btn btn-warning">Add Shots</div>
+            {{--{{Form::label('shots','Shots:')}}--}}
+            {{--{{Form::text('shots[]', null, array( 'id'=>'shots','class'=> 'form-control'))}}--}}
+            <div id="wrapper"></div>
+
+
             {{Form::label('tips','Tips:')}}
             {{Form::textarea('tips', null, array('class'=> 'form-control'))}}
             {{Form::label('time','How many minutes?')}}
             {{Form::text('time', null, array('class'=> 'form-control'))}}
-            {{Form::label('order','Order:')}}
-            {{Form::text('order', null, array('class'=> 'form-control'))}}
+
+
 
 
             {{Form::submit('Save', array('class'=> 'btn btn-success btn-lg btn-block'))}}
@@ -62,11 +67,17 @@
 @stop
 @section('java')
     <script>
+
         $('#shotbtn').on('click', function(){
-            var $shots = $('#shots').text();
-           var $shot = $('#shot').val();
-          $('#shots').text($shots+"<li>"+$shot+"</li>");
-           $('#shot').val('');
+
+
+
+//            $('#tblShots').append('<tr><td "><div class="btn btn-link btn-sm">Remove</div></td><td class="">'+$shot+'</td></tr>');
+
+
+           $('#wrapper').append('<div><input class="form-control" name="shots[]"</div>');
+
+
 
         })
 

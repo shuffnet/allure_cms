@@ -1,0 +1,105 @@
+@extends('main')
+
+@section('content')
+
+    <div class="row">
+        <div class="col col-md-4">
+
+
+
+
+
+
+        </div>
+
+
+        <div id="" class="col col-md-4 ">
+            <h3>Add Shot</h3>
+            <hr>
+
+
+
+
+            <hr>
+            {!! Form::model($shot, ['route'=>['shotList.update', $shot->id], 'method'=> 'PUT']) !!}
+            <select class="form-control" name="photographer" id="">
+                <option class="form-control" value="1"> Lead Photographer</option>
+                <option class="form-control" value="2"> Second Photographer</option>
+                <option value="3">Both Photographers</option>
+
+
+            </select>
+
+            <input   type="radio" name="gender" value="1"> Pre Ceremony<br>
+            <input   type="radio" name="gender" value="2"> Post Ceremony<br>
+
+
+            {{Form::label('name','Group Name:')}}
+            {{Form::text('name', null, array('class'=> 'form-control'))}}
+            <hr>
+            <div id="shotbtn" class="btn btn-warning">Add Shots</div>
+            <hr>
+
+                @foreach ($shot->get_shots as $shotList)
+                    <div class="row">
+                     <div class="col-md-2"><div class="btn btn-link remove">Remove</div></div>
+                        <div class="col-md-6">
+                     {{Form::text('shots[]',$shotList->shot, array('class'=> 'form-control'))}}
+                        </div>
+                    </div>
+                @endforeach
+
+            <div id="wrapper"></div>
+
+
+            {{Form::label('tips','Tips:')}}
+            {{Form::textarea('tips', null, array('class'=> 'form-control'))}}
+            {{Form::label('time','How many minutes?')}}
+            {{Form::text('time', null, array('class'=> 'form-control'))}}
+
+
+
+
+            {{Form::submit('Update', array('class'=> 'btn btn-success btn-lg btn-block'))}}
+            {!! Form::close() !!}
+        </div>
+
+
+
+
+
+    </div>
+
+
+    </div>
+
+@stop
+@section('java')
+    <script>
+
+
+        $(document).on('click','.remove',function(){
+
+            $(this).closest('.row').remove();
+        });
+
+        $('#shotbtn').on('click', function(){
+
+
+
+//            $('#tblShots').append('<tr><td "><div class="btn btn-link btn-sm">Remove</div></td><td class="">'+$shot+'</td></tr>');
+
+
+//            $('#wrapper').append('<div><input class="form-control" name="shots[]"</div>');
+            $('#wrapper').append(' <div class="row"><div class="col-md-2"><div class="btn btn-link remove">Remove</div></div><div class="col-md-6">{{Form::text("shots[]",Null, array("class"=> "form-control"))}}</div></div>')
+
+
+
+        });
+        $('.deleteShot').on('click', function(){
+
+            alert($this.closest(td.eq(0).text));
+        })
+
+    </script>
+@stop

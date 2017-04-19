@@ -1,6 +1,7 @@
 <script type="text/javascript">
 
     var ceremonyStartTime = undefined;
+    var timelineID = 0 ;
 
     $(document).ready(function(){
         // *************************************************************************************
@@ -93,72 +94,13 @@
 
         });
 
-        $('#btnSaveTimeline2').on('click', function () {
-
-
-            TableData = $.toJSON(storeTblValues());
-            var $job = '{{$job->id}}';
-
-            $.ajax({
-                url: '/jobtimeline',
-                type: 'POST',
-                data:{
-                    'data':TableData,
-                    'jobId':$job,
-
-                    },
-                success: function(data){
-                    // return value stored in msg variable
-                    window.location.reload();
-
-
-
-                }
-            });
-
-
-
-//                alert(storeTblValues()) ;
-
-
-        });
-
-
-        function storeTblValues()
-
-        {
-            var TableData = new Array();
-
-            $('#timeline tr').each(function(row, tr){
-                TableData[row]={
-                    "duration" : $(tr).find('td:eq(2)').text()
-                    , "time" :$(tr).find('td:eq(4)').text()
-                    , "shot" : $(tr).find('td:eq(5)').text()
-                    , "shots" : $(tr).find('td:eq(6)').html()
-                    , "tips" : $(tr).find('td:eq(7)').text()
-
-                }
-            });
-//                TableData.shift();  // first row will be empty - so remove
-//                TableData = $.toJSON(TableData);
-
-            return TableData;
-
-        }
-
-
 
 
 
 
 
     });
-
-
-
-
-
-    $('#btnStandard6').on('click', function () {
+    $('#btnSaveTimeline').on('click', function () {
 
 
         var $jobDate = $('#ceremony-date-id').val();
@@ -179,16 +121,25 @@
                 'name': $name,
 
 
-                },
-                success: function(data) {
-                    console.log(data);
+            },
+            success: function(data) {
+
+
 //                    window.location.reload();
-                    window.location.replace('/jobs/timeline/show/'+$job+'/'+data);
+
+                window.location.replace('/jobs/timeline/create/'+$job+'/'+data);
+
+
             }
 
         });
 
+
     });
+
+
+
+
     //      End of btnStandard6  *************************************************************************************************
 
     $('#btnCustomAdd').on('click', function () {
@@ -251,6 +202,12 @@
 
     $('#shotListTable .addPost').on('click',function(){
         var $row = $(this).closest("tr");       // Finds the closest row <tr>
+        add_item($row);
+
+    });
+    function add_item (row) {
+        $row = row;
+//        var $row = $(this).closest("tr");       // Finds the closest row <tr>
         $minutes = $row.find("td:nth-child(2)").text();
         $shot =  $row.find("td:nth-child(3)").text();
         $shots = $row.find("td:nth-child(4)").html();
@@ -277,7 +234,7 @@
         $row3.addClass('hidden');
         calculateMin()
 
-    });
+    }
 
 
     $('#shotListTable .addPre').on('click',function() {

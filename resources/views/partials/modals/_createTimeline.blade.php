@@ -50,9 +50,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <div id="btnCustomAdd" class="btn btn-default ">Custom</div>
-                    <div id="btnStandard6" class="btn btn-default ">Standard Six</div>
-                    <div id="btnStandard8" class="btn btn-default ">Standard Eight</div>
+                    <div id="btnSaveTimeline" class="btn btn-default ">Save</div>
+
 
 
                 </div>

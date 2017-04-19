@@ -118,7 +118,7 @@ else {
         <div class="col col-md-8 col-md-offset-2">
             @if (count($job->timeline) > 0)
 
-                <h4>Create another Timeline: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
+                <h4>Create another Timeline: <a  href="{{ url('createtimeline/'.$job->id)}}">Create</a></h4>
                <div class="row text-center" style="background-color: lightgray"><h4>Timelines for this job</h4></div>
 
                 <div id="workingtimeline">
@@ -140,7 +140,7 @@ else {
                             </td>
                             <td>{{$timeline->id}}</td>
                             <td >
-                                <h3>{{$timeline->name }}<div class="btn btn-link btn-lg">{{$timelineDate}}</div></h3>
+                                <a href="{{ url('/jobs/timeline/show/'.$job->id."/".$timeline->id)}}" class="btn btn-link btn-lg"><strong>{{$timeline->name}}</strong>{{" ". $timelineDate}}</></a>
                             </td>
 
 
@@ -152,8 +152,9 @@ else {
 
                 </div>
             @else
-                <h4>No Time lines for this job: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>
+                {{--<h4>No Time lines for this job: <div id="btnCreateTimeline" class="btn btn-link">Create</div></h4>--}}
 
+                <h4>Create a Timeline: <a  href="{{ url('createtimeline/'.$job->id)}}">Create</a></h4>
 
             @endif
 
