@@ -130,7 +130,7 @@ else {
                 </tr>
                 </thead>
 
-<tbody>
+                <tbody>
 
                 @foreach($timeline->timeline_shots as $shot)
 
@@ -145,7 +145,7 @@ else {
 
                     </tr>
                 @endforeach
-</tbody>
+            </tbody>
             </table>
         </div>
 

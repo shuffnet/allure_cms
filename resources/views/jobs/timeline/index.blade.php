@@ -140,7 +140,7 @@ else {
                             </td>
                             <td>{{$timeline->id}}</td>
                             <td >
-                                <a href="{{ url('/jobs/timeline/show/'.$job->id."/".$timeline->id)}}" class="btn btn-link btn-lg"><strong>{{$timeline->name}}</strong>{{" ". $timelineDate}}</></a>
+                                <a href="{{ url('/jobs/timeline/create/'.$job->id."/".$timeline->id)}}" class="btn btn-link btn-lg"><strong>{{$timeline->name}}</strong>{{" ". $timelineDate}}</></a>
                             </td>
 
 

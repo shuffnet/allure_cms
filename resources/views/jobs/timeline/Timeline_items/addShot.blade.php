@@ -13,25 +13,28 @@
         </div>
 
 
-        <div id="" class="col col-md-4 ">
+        <div id="" class="col col-md-5 ">
             <h3>Add Shot</h3>
             <hr>
-
+            {!! Form::model($shot, ['route'=>['jobtimeline.store'], 'method'=> 'POST']) !!}
+            {{Form::text('timeline_id',$timeline, array('class'=> 'form-control'))}}
+            {{Form::text('job_id',$job, array('class'=> 'form-control'))}}
 
 
 
             <hr>
-            {!! Form::model($shot, ['route'=>['shotList.update', $shot->id], 'method'=> 'PUT']) !!}
+
+
             <select class="form-control" name="photographer" id="">
                 <option class="form-control" value="1"> Lead Photographer</option>
                 <option class="form-control" value="2"> Second Photographer</option>
-                <option value="3">Both Photographers</option>
+
 
 
             </select>
 
-            <input   type="radio" name="gender" value="1"> Pre Ceremony<br>
-            <input   type="radio" name="gender" value="2"> Post Ceremony<br>
+            <input   type="radio" name="pre" value="1"> Pre Ceremony<br>
+            <input   type="radio" name="pre" value="2"> Post Ceremony<br>
 
 
             {{Form::label('name','Group Name:')}}
@@ -54,13 +57,13 @@
 
             {{Form::label('tips','Tips:')}}
             {{Form::textarea('tips', null, array('class'=> 'form-control'))}}
-            {{Form::label('time','How many minutes?')}}
-            {{Form::text('time', null, array('class'=> 'form-control'))}}
+            {{Form::label('duration','How many minutes?')}}
+            {{Form::text('duration', $shot->time, array('class'=> 'form-control'))}}
 
 
 
 
-            {{Form::submit('Update', array('class'=> 'btn btn-success btn-lg btn-block'))}}
+            {{Form::submit('Add', array('class'=> 'btn btn-success btn-lg btn-block'))}}
             {!! Form::close() !!}
         </div>
 

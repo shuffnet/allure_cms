@@ -112,13 +112,31 @@ else {
     </div>  <!--End of Top Row-->
 
 <div class="container">
+    <div class="row">
+        <div class="col col-md-6"><h3>Timeline: {{$timeline->name}}</h3></div>
+
+
+    </div>
 
     <div class="row">
-        <div class="col col-md-5">
-            <a id="timelineshots" class=" col col-md-5 col-md-offset-1"></a>
+        <div class="row">
+            <h3>Timeline Groups</h3>
+            @foreach($timelinegroup as $group)
+                <a href="{{route('timeline.addTimelinegroup',['timelineId'=>$timeline->id, 'timelinegroupID'=>$group->id])}}">{{$group->group}}</a>
 
+                @endforeach
+
+        </div>
+        <div class="row">
             <h3>Shots</h3>
             <div class="btn btn-default" id="custModalBtn">Add Custom Shot</div>
+
+        </div>
+        <div class="col col-md-5">
+
+
+
+
 
             <table class="tableDisplay table table-bordered" id="shotListTable">
                 <tbody>
@@ -132,7 +150,7 @@ else {
 
                 @php ($i = 1)
 
-                @foreach($shots as $shot)
+                @foreach($shots->sortBy('name') as $shot)
                     <tr class="">
                         {{--0--}}
                         <td><i class="btn glyphicon glyphicon-plus  active" data-toggle="collapse" id="row{{$i}}" data-target=".row{{$i}}"></i></td>
@@ -161,21 +179,37 @@ else {
         </div>
 
 
-        <div id="" class="col col-md-5 col-md-offset-1 ">
+        <div id="" class="col col-md-6  ">
 
 
 
 
 
             <div id="workingtimeline">
-                <table class="tableDisplay table" id="timeline">
 
 
-
-                </table>
             </div>
 
-            <div id="btnSaveTimeline" class="btn btn-success ">Save</div>
+            <div class="row">
+                @foreach($timeline->timeline_shots->sortBy('time') as $timeline_shot)
+                    <div class="row" style="background-color: ">
+                        <div class="col col-md-2"><h4><strong>{{$timeline_shot->shortTime}}</strong></h4></div>
+                        <div class="col col-md-8"><h4><strong>{{$timeline_shot->shot}}</strong></h4></div>
+
+                    </div>
+
+                        @foreach($timeline_shot->get_details as $detail)
+                            <div class="row hidden">
+                               <div class="col col-md-5 col-md-offset-2">{{$detail->detail}}</div>
+                            </div>
+                        @endforeach
+
+
+                    @endforeach
+
+            </div>
+
+
             <div id="timepurchased"></div>
             <div id="purchased"></div>
             <div id="totaltime"></div>

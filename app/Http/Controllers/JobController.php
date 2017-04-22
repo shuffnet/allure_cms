@@ -11,6 +11,7 @@ use App\OrderType;
 use App\Role;
 use App\ShotList;
 use App\Timeline;
+use App\TimelineGroup;
 use Illuminate\Support\Facades\DB;
 use Session;
 use Illuminate\Http\Request;
@@ -148,10 +149,8 @@ class JobController extends Controller
             ->join('contacts', 'orders.contact_id', '=', 'contacts.id')
             ->join('order_types','orders.orderType_id', '=', 'order_types.id')
             ->select('orders.id', 'contacts.fname', 'contacts.lname', 'order_types.type', 'orders.orderDate')
-
-
-
             ->get();
+
 
         return view('jobs.show')
             ->with('job', $job)
@@ -161,6 +160,7 @@ class JobController extends Controller
             ->withOrder_types($order_types)
             ->withOrders($orders)
             ->withShots($shotList);
+
 
     }
 

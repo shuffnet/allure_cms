@@ -48,12 +48,18 @@ Route::get('jobs/timeline/addShot/{jobid}/{timelineId}/{shotid}',['uses'=>'JobTi
 
 Route::get('createtimeline/{id}',['uses'=>'TimelineController@createTimeline', 'as' => 'timeline.createTimeline']);
 
-
 Route::resource('timeline', 'TimelineController');
+Route::get('jobs/timeline/addtimelinegroup/{timelineID}/{timelinegroupID}' , ['uses' => 'JobTimelineController@addbygroup', 'as' => 'timeline.addTimelinegroup']);
+
 Route::get('jobs/timeline/index/{jobid}', ['uses'=>'JobTimelineController@jobTimelineIndex', 'as' => 'job_timeline.jobtimelineIndex']);
 Route::resource('jobtimeline',  'JobTimelineController');
 Route::get('shotListDelete/{id}',['uses'=>'ShotListShotsController@deleteShot', 'as' => 'shotListDelete.delete']);
 Route::resource('shotListShots', 'ShotListShotsController');
+Route::get('timelinegroupshot/{groupid}/{shotid}',['uses'=>'TimelineGroupController@addshot', 'as' => 'timelinegroupshot.addshot']);
+
+Route::resource('timelinegroup','TimelineGroupController');
+
+Route::resource('timelinegroupshot', 'TimelineGroupShotController');
 
 
 

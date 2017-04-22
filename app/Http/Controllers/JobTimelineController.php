@@ -7,9 +7,13 @@ use App\Job;
 use App\JobTimelineShots;
 use App\ShotList;
 use App\Timeline;
+use App\TimelineGroup;
+use Carbon\Carbon;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Session;
+use App\JobTimelineDetails;
 
 
 use App\Http\Requests;
@@ -45,6 +49,7 @@ class JobTimelineController extends Controller
             ->select('*','job_role.id')
             ->orderBy('role', 'asc')
             ->get();
+        $timelinegroup = TimelineGroup::all();
 
 //
 
@@ -55,6 +60,7 @@ class JobTimelineController extends Controller
             ->withLead($lead)
             ->withShots($shotList)
             ->withTimeline($timeline)
+            ->withTimelinegroup($timelinegroup)
 //
             ;
 
@@ -84,6 +90,7 @@ class JobTimelineController extends Controller
             ->orderBy('role', 'asc')
             ->get();
 
+
 //
 
         return view('jobs.timeline.show')
@@ -93,6 +100,7 @@ class JobTimelineController extends Controller
             ->withLead($lead)
             ->withShots($shotList)
             ->with('timeline',$timeline)
+
 //
             ;
 
@@ -168,49 +176,115 @@ class JobTimelineController extends Controller
 
 
     }
+
     public function store(Request $request)
     {
+        $this->validate($request, array(
 
-        $job = $request->jobId;
+            'pre' => 'required|max:255',
+
+        ));
+
+        $job = $request->job_id;
         $timelineID = $request->timeline_id;
+        $duration = $request->duration;
+        $pre = $request->pre;
 
-        // Unescape the string values in the JSON array
-        $tableData = stripcslashes($request->data);
+                if ($pre == 1){
 
-        // Decode the JSON array
-        $tableData = json_decode($tableData,TRUE);
-        foreach ($tableData as $row){
-           $duration = $row{'duration'};
-           $time = $row{'time'};
-           $shot = $row{'shot'};
-           $shortTime = $row{'shortTime'};
-  //        $shots = $row{'shots'};
+                    $lastShot = DB::table('jobtimelineshots')
 
-           $tips = $row{'tips'};
-//           $shots =  htmlspecialchars($row{'shots'}, ENT_QUOTES);
+                        ->where('timeline_id', '=', $timelineID)
+                        ->orderBy('time', 'asc')->first();
 
-            $timeline = new JobTimelineShots;
+                    $shotTime = (new Carbon($lastShot->time))->subMinutes($duration)->format('H:i ');
 
-           $timeline->job_id = $job;
-           $timeline->timeline_id = $timelineID;
-            $timeline->time = $time;
-            $timeline->duration = $duration;
-            $timeline->shortTime = $shortTime;
-            $timeline->shot = $shot;
-//            $timeline->shots = $shots;
-            $timeline->tips = $tips;
-            $timeline->save();
+                } else{
+
+                    $lastShot = DB::table('jobtimelineshots')
+
+                        ->where('timeline_id', '=', $timelineID)
+                        ->orderBy('time', 'desc')->first();
+                    $shotTime = (new Carbon($lastShot->time))->addMinutes($lastShot->duration)->format('H:i ');
+
+                }
+
+
+        $shot = new JobTimelineShots();
+        $shot->timeline_id = $timelineID;
+        $shot->time = $shotTime;
+        $shortDate = new DateTime($shotTime);
+        $shot->shot = $request->name;
+        $shot->shortTime = $shortDate->format('g:i a') ;
+        $shot->duration = $request->duration;
+        $shot->save();
+
+
+        $shots = $request->shots;
+        if (isset($shots)) {
+
+            foreach ($shots as $detail) {
+                $details = new JobTimelineDetails();
+                $details->detail = $detail;
+                $details->jobtimelineshots_id = $shot->id;
+                $details->save();
+                unset($detail);
+            }
 
         }
-        Session::flash('success', $job);
+
+
+        return redirect()->route('job_timeline.jobtimelineCreate', ['jobid' => $job, 'timelineId'=> $timelineID]);
+
+
+
+
+
+    }
+    public function addbygroup($timelineID, $groupID)
+    {
+
+
+        $group = TimelineGroup::find($groupID);
+        $timeline = Timeline::find($timelineID);
+        $timeline->jobDate;
+       $ceremonyTime = $timeline->ceremonyTime;
+       $ceremonyTime = (new Carbon($ceremonyTime))->format('H:i');
+        $timeline->ceremonyEndTime;
+       $timepurchased = $timeline->duration;
+       if ($timepurchased >= 8){
+           $startTime = (new Carbon($ceremonyTime))->subMinutes(180)->format('H:i ');
+       }
+       if ($timepurchased < 8){
+           $startTime = (new Carbon($ceremonyTime))->subMinutes(120)->format('H:i ');
+       }
+
+        echo($timepurchased."<br>");
+        echo($startTime."<br>");
+        echo ($ceremonyTime."<br>");
+        echo('<table>');
+        $duration = 0;
+        $lastShot = $startTime;
+        $shotTime = (new Carbon($lastShot))->addMinutes($duration)->format('H:i') ;
+
+        foreach($group->getgroupshots->sortBy('pivot.id') as $shot)
+        {
+            echo('<tr><td>'.(new Carbon($shotTime))->format('g:i') . '</td><td>'." ". $shot->name.'</td><td>'.$shot->time.'</td></tr>');
+            $lastShot = $shotTime;
+            $shotTime = (new Carbon($lastShot))->addMinutes($shot->time)->format('H:i');
+            foreach ($shot->get_shots as $detail)
+            {
+                echo('<tr><td><td>'.$detail->shot.'</td></td>');
+            }
+
+        }
+        echo('</table>');
+
+
+
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
         //

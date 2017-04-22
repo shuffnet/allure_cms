@@ -22,11 +22,11 @@
                         {{Form::text('howMuchTime', null, array('class'=> 'form-control'))}}
                         {{Form::label('jobDate','Ceremony Date:')}}
                         {{Form::date('jobDate', '2017-03-12', array('class'=> 'form-control'))}}
-                        {{Form::label('ceremony-time','Ceremony Start Time:')}}
+                        {{Form::label('ceremonytime','Ceremony Start Time:')}}
                         {{Form::time('ceremonytime', '17:30', array('class'=> 'form-control'))}}
 
-                        {{Form::label('ceremony-end-time','Ceremony End Time:')}}
-                        {{Form::time('ceremony-end-time', '18:00', array('class'=> 'form-control'))}}
+                        {{Form::label('ceremonyendtime','Ceremony End Time:')}}
+                        {{Form::time('ceremonyendtime', '18:00', array('class'=> 'form-control'))}}
                         {{Form::text('job_id', $job, array('class'=>'form-control'))}}
 
 
