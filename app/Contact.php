@@ -28,7 +28,9 @@ class Contact extends Model
 
     }
 
-
+    public function get_sessions() {
+        return $this->belongsTo('App\Session', 'contact_id');
+    }
 
 
 }

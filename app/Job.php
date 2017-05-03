@@ -40,5 +40,8 @@ class Job extends Model
     {
         return $this->hasManyThrough('App\Timeline', 'App\JobTimelineShots');
     }
+    public function sessions(){
+        return $this->hasMany('App\Session' ,'job_id', 'id' );
+    }
 
 }

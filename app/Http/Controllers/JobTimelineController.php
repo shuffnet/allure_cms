@@ -241,7 +241,7 @@ class JobTimelineController extends Controller
 
 
     }
-    public function addbygroup($timelineID, $groupID)
+    public function addbygroup($timelineID, $groupID, $jobID)
     {
 
 
@@ -262,28 +262,66 @@ class JobTimelineController extends Controller
         echo($timepurchased."<br>");
         echo($startTime."<br>");
         echo ($ceremonyTime."<br>");
-        echo('<table>');
+//        echo('<table>');
         $duration = 0;
         $lastShot = $startTime;
         $shotTime = (new Carbon($lastShot))->addMinutes($duration)->format('H:i') ;
 
-        foreach($group->getgroupshots->sortBy('pivot.id') as $shot)
+        foreach($group->getgroupshots->sortBy('pivot.id') as $groupshot)
         {
-            echo('<tr><td>'.(new Carbon($shotTime))->format('g:i') . '</td><td>'." ". $shot->name.'</td><td>'.$shot->time.'</td></tr>');
+            $shot = new JobTimelineShots();
+            $shot->timeline_id = $timelineID;
+            $shot->time = $shotTime;
+            $shortDate = new DateTime($shotTime);
+            $shot->shot = $groupshot->name;
+            $shot->shortTime = $shortDate->format('g:i a') ;
+            $shot->duration = $groupshot->time;
+
+            $shot->tips = $groupshot->tips;
+            $shot->save();
+//            echo('<tr><td>'.(new Carbon($shotTime))->format('g:i') . '</td><td>'." ". $shot->name.'</td><td>'.$shot->time.'</td></tr>');
             $lastShot = $shotTime;
-            $shotTime = (new Carbon($lastShot))->addMinutes($shot->time)->format('H:i');
-            foreach ($shot->get_shots as $detail)
-            {
-                echo('<tr><td><td>'.$detail->shot.'</td></td>');
-            }
+            $shotTime = (new Carbon($lastShot))->addMinutes($groupshot->time)->format('H:i');
+
+                $details = $groupshot->get_shots;
+
+                foreach ($details as $detail) {
+
+                    $details = new JobTimelineDetails();
+                    $details->detail = $detail->shot;
+                    $details->jobtimelineshots_id = $shot->id;
+                    $details->save();
+                    unset($detail);
+                }
+
+          unset($groupshot);
 
         }
-        echo('</table>');
+//        echo('</table>');
 
+        return redirect()->route('job_timeline.jobtimelineCreate', ['jobid' => $jobID, 'timelineId'=> $timelineID]);
 
 
 
     }
+
+
+
+    public function clearallshots($jobID,$timelineID)
+    {
+        $shots = JobTimelineShots::where('timeline_id',$timelineID)->get();
+           foreach ($shots as $shot)
+           {
+               $shot->delete();
+               $shot->get_details()->delete();
+           }
+        return redirect()->route('job_timeline.jobtimelineCreate', ['jobid' => $jobID, 'timelineId'=> $timelineID]);
+
+    }
+
+
+
+
 
     public function show($id)
     {

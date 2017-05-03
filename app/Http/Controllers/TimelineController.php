@@ -71,37 +71,37 @@ class TimelineController extends Controller
         $timeline->save();
         $id = $timeline->id;
 //        Sets Ceremony
-        $shot = new JobTimelineShots();
-        $shot->timeline_id = $id;
-        $shot->time = $starttime;
-        $shot->duration = ( strtotime($endtime) - strtotime($starttime) ) / 60;
-        $shortDate = new DateTime($starttime);
-        $shot->shortTime = $shortDate->format('g:i a') ;
-        $shot->shot = "Ceremony";
-        $shot->save();
+//        $shot = new JobTimelineShots();
+//        $shot->timeline_id = $id;
+//        $shot->time = $starttime;
+//        $shot->duration = ( strtotime($endtime) - strtotime($starttime) ) / 60;
+//        $shortDate = new DateTime($starttime);
+//        $shot->shortTime = $shortDate->format('g:i a') ;
+//        $shot->shot = "Ceremony";
+//        $shot->save();
 //        Sets Ceremony End
-        $shot = new JobTimelineShots();
-        $shortDate = new DateTime($endtime);
-        $shot->timeline_id = $id;
-        $shot->time = $endtime;
-        $shot->shot = "Ceremony Recessional";
-        $shot->shortTime = $shortDate->format('g:i a') ;
-        $shot->duration = "5";
-        $shot->save();
+//        $shot = new JobTimelineShots();
+//        $shortDate = new DateTime($endtime);
+//        $shot->timeline_id = $id;
+//        $shot->time = $endtime;
+//        $shot->shot = "Ceremony Recessional";
+//        $shot->shortTime = $shortDate->format('g:i a') ;
+//        $shot->duration = "5";
+//        $shot->save();
 
 //        Photographers setup for ceremony
 
-        $shot = new JobTimelineShots();
-
-        $shotTime = (new Carbon($starttime))->subMinutes(30)->format('H:i ');
-        $shot->timeline_id = $id;
-        $shot->time = $shotTime;
-        $shortDate = new DateTime($shotTime);
-
-        $shot->shot = "Photographers Setup For Ceremony";
-        $shot->shortTime = $shortDate->format('g:i a') ;
-        $shot->duration = "30";
-        $shot->save();
+//        $shot = new JobTimelineShots();
+//
+//        $shotTime = (new Carbon($starttime))->subMinutes(30)->format('H:i ');
+//        $shot->timeline_id = $id;
+//        $shot->time = $shotTime;
+//        $shortDate = new DateTime($shotTime);
+//
+//        $shot->shot = "Photographers Setup For Ceremony";
+//        $shot->shortTime = $shortDate->format('g:i a') ;
+//        $shot->duration = "30";
+//        $shot->save();
 
 
 

@@ -15,7 +15,7 @@ else {
 
 ?>
 @section('content')
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">  <!--Top Row Row-->
             <div class="col col-md-8 col-md-offset-2"> <!--Job Name Column-->
                 <div class="row ">
@@ -122,7 +122,10 @@ else {
         <div class="row">
             <h3>Timeline Groups</h3>
             @foreach($timelinegroup as $group)
-                <a href="{{route('timeline.addTimelinegroup',['timelineId'=>$timeline->id, 'timelinegroupID'=>$group->id])}}">{{$group->group}}</a>
+                <div class="row">
+                    <a href="{{route('timeline.addTimelinegroup',['timelineId'=>$timeline->id, 'timelinegroupID'=>$group->id, 'jobID'=>$job->id])}}">{{$group->group}}</a>
+
+                </div>
 
                 @endforeach
 
@@ -130,56 +133,105 @@ else {
         <div class="row">
             <h3>Shots</h3>
             <div class="btn btn-default" id="custModalBtn">Add Custom Shot</div>
+            <a href="{{ route('shotList.index') }}" class="">Shot List</a></td><br/>
+
 
         </div>
-        <div class="col col-md-5">
+        <div class="row">
+            <div id="btnShotsShow" class="btn btn-warning">Add Shot</div>
+        </div>
+
+        <div class="container">
+            <!-- Modal -->
+            <div class="modal fade" id="shotListModal" role="dialog">
+                <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Modal Header</h4>
+
+                        </div>
+                        <div class="modal-body">
+
+
+                            <div id="shotlist" class="col col-md-10">
 
 
 
 
 
-            <table class="tableDisplay table table-bordered" id="shotListTable">
-                <tbody>
-                <tr>
-                    <th></th>
+                                <table class="tableDisplay table table-bordered" id="shotListTable">
+                                    <tbody>
+                                    <tr>
+                                        <th></th>
 
-                    <th>Shot Name</th>
-                    <th ></th>
+                                        <th>Shot Name</th>
+                                        <th ></th>
 
-                </tr>
+                                    </tr>
 
-                @php ($i = 1)
+                                    @php ($i = 1)
 
-                @foreach($shots->sortBy('name') as $shot)
-                    <tr class="">
-                        {{--0--}}
-                        <td><i class="btn glyphicon glyphicon-plus  active" data-toggle="collapse" id="row{{$i}}" data-target=".row{{$i}}"></i></td>
-                        {{--1--}}
-                        <td class="hidden">{{$shot->id}}</td>
-                        {{--2--}}
-                        <td class="hidden">{{$shot->time}}</td>
-                        {{--3--}}
-                        <td>{{$shot->name}}</td>
-                        {{--4--}}
-                        <td class="hidden">{{$shot->tips}}</td>
+                                    @foreach($shots->sortBy('name') as $shot)
+                                        <tr class="">
+                                            {{--0--}}
+                                            <td><i class="btn glyphicon glyphicon-plus  active" data-toggle="collapse" id="row{{$i}}" data-target=".row{{$i}}"></i></td>
+                                            {{--1--}}
+                                            <td class="hidden">{{$shot->id}}</td>
+                                            {{--2--}}
+                                            <td class="hidden">{{$shot->time}}</td>
+                                            {{--3--}}
+                                            <td>{{$shot->name}}</td>
+                                            {{--4--}}
+                                            <td class="hidden">{{$shot->tips}}</td>
 
-                        <td><a href="{{ route('job_timeline.jobtimelineAddShot',['jobid'=>$job->id, 'timelineid'=>$timeline->id, 'shotid'=>$shot->id])}}" class="">Add</a></td>
-                    </tr>
-                    <tr class=" info collapse row{{$i}}"><td colspan="4"  class=""><ul class="">@foreach ($shot->get_shots as $shotList)<li>{{$shotList->shot}}</li>@endforeach</ul></td></tr>
-                    <tr class="info collapse row{{$i}}"><td colspan="4" class=""><p>{{$shot->tips}}</p></td></tr>
-                    @php ($i = $i + 1)
-                @endforeach
+                                            <td><a href="{{ route('job_timeline.jobtimelineAddShot',['jobid'=>$job->id, 'timelineid'=>$timeline->id, 'shotid'=>$shot->id])}}" class="">Add</a></td>
+                                        </tr>
+                                        <tr class=" info collapse row{{$i}}"><td colspan="4"  class=""><ul class="">@foreach ($shot->get_shots as $shotList)<li>{{$shotList->shot}}</li>@endforeach</ul></td></tr>
+                                        <tr class="info collapse row{{$i}}"><td colspan="4" class=""><p>{{$shot->tips}}</p></td></tr>
+                                        @php ($i = $i + 1)
+                                    @endforeach
 
-                </tbody>
-            </table>
-            <div id="btnCustomAdd" class="btn btn-default">Custom</div>
-            <div id="btnStandard6" class="btn btn-default ">Standard Six</div>
-            <div id="btnStandard8" class="btn btn-default ">Standard Eight</div>
+                                    </tbody>
+                                </table>
+                                <div id="btnCustomAdd" class="btn btn-default">Custom</div>
+                                <div id="btnStandard6" class="btn btn-default ">Standard Six</div>
+                                <div id="btnStandard8" class="btn btn-default ">Standard Eight</div>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                        </div>
+                        <div class="modal-footer">
+
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="editModal" type="button" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
 
         </div>
 
 
-        <div id="" class="col col-md-6  ">
+
+
+
+        <div id="" class="col col-md-6  col-md-offset-1">
 
 
 
@@ -189,24 +241,52 @@ else {
 
 
             </div>
+            <nav class="navbar">
 
-            <div class="row">
-                @foreach($timeline->timeline_shots->sortBy('time') as $timeline_shot)
-                    <div class="row" style="background-color: ">
-                        <div class="col col-md-2"><h4><strong>{{$timeline_shot->shortTime}}</strong></h4></div>
-                        <div class="col col-md-8"><h4><strong>{{$timeline_shot->shot}}</strong></h4></div>
+            </nav>
+            <nav class="navbar navbar-default">
+                <div class="container">
+                    <p class="navbar-text">{{$timeline->name}}</p>
+                    <p>
+                    <div class="btn-group">
+
+                        <a class="btn" href="{{route('timelineshots.clear',['jobID'=>$job->id, 'timelineID'=>$timeline->id])}}">Clear All Shots</a>
+                       
 
                     </div>
+                    </p>
+
+
+
+
+                </div>
+            </nav>
+            <div class="row">
+                <table class="table">
+                @foreach($timeline->timeline_shots->sortBy('time') as $timeline_shot)
+
+
+                    <tr>
+                        <td><input style="margin-top: 15px;line-height: normal;" type="checkbox"></td>
+                        <td><h5><strong>{{$timeline_shot->shortTime}}</strong></h5></td>
+                        <td><h5><strong>{{$timeline_shot->shot}}</strong></h5></td>
+                    </tr>
+
+
 
                         @foreach($timeline_shot->get_details as $detail)
-                            <div class="row hidden">
-                               <div class="col col-md-5 col-md-offset-2">{{$detail->detail}}</div>
-                            </div>
+
+                            <tr class="hidden"><td></td><td colspan="2">{{$detail->detail}}</td></tr>
                         @endforeach
 
+                     {{--<div class="row">--}}
+                         {{--<div class="col col-md-5 col-md-offset-1"><strong>*{{$timeline_shot->tips}}</strong></div>--}}
+
+                     {{--</div>--}}
+                        <tr class="hidden"><td colspan="2">{{$timeline_shot->tips}}</td></tr>
 
                     @endforeach
-
+                </table>
             </div>
 
 
@@ -227,6 +307,7 @@ else {
 
     @include('../partials.jobs._timeline')
     @include('../partials.modals._add_shot_to_timeline')
+    @include('../partials.modals._shotlist')
 @endsection
 @section('java')
 
@@ -235,6 +316,10 @@ else {
 
 
     <script>
+        $('#btnShotsShow').on('click', function(){
+
+            $('#shotListModal').modal("show");
+        });
 
         $( document ).ready(function() {
             $('#shotListTable .addPrePhoto1').on('click',function(){

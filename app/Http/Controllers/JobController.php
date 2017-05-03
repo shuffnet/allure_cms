@@ -25,6 +25,10 @@ class JobController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     public function index()
     {
         //Create variable and store all the jobs in it
@@ -163,6 +167,77 @@ class JobController extends Controller
 
 
     }
+    public function files($id)
+    {
+        $order_types = OrderType::all();
+        $job = Job::find($id);
+
+
+
+
+
+        $photogs = Contact::whereHas('contact_type', function($q) {
+            $q->where('role', '=', 'Lead photographer');
+        })->get();
+
+
+        $lead = DB::table('job_role')
+            ->where('job_id', '=', $job->id)
+            ->where('role_id', '=', 1)
+            ->join('contacts','job_role.contact_id' ,'=','contacts.id')
+            ->first();
+
+
+
+        $contacts = DB::table('job_role')
+            ->leftJoin('contacts', 'job_role.contact_id', '=', 'contacts.id')
+            ->join('roles', 'job_role.role_id', '=', 'roles.id')
+            ->where('job_id', '=', $job->id)
+            ->select('*','job_role.id')
+            ->orderBy('role', 'asc')
+            ->get();
+
+//
+        $bride = DB::table('job_role')
+            ->leftJoin('contacts', 'job_role.contact_id', '=', 'contacts.id')
+            ->join('roles', 'job_role.role_id', '=', 'roles.id')
+            ->where('job_id', '=', $job->id)
+            ->select('*','job_role.id')
+            ->where('role', "=", "bride")
+            ->first();
+        $groom = DB::table('job_role')
+            ->leftJoin('contacts', 'job_role.contact_id', '=', 'contacts.id')
+            ->join('roles', 'job_role.role_id', '=', 'roles.id')
+            ->where('job_id', '=', $job->id)
+            ->select('*','job_role.id')
+            ->where('role', "=", "groom")
+            ->first();
+
+
+        $shotList = ShotList::all();
+        $orders = DB::table('orders')
+
+            ->where('job_id', "=", $job->id)
+            ->join('contacts', 'orders.contact_id', '=', 'contacts.id')
+            ->join('order_types','orders.orderType_id', '=', 'order_types.id')
+            ->select('orders.id', 'contacts.fname', 'contacts.lname', 'order_types.type', 'orders.orderDate')
+            ->get();
+
+
+        return view('jobs.files')
+            ->with('job', $job)
+            ->withContacts($contacts)
+            ->withPhotogs($photogs)
+            ->withLead($lead)
+            ->withOrder_types($order_types)
+            ->withOrders($orders)
+            ->withShots($shotList)
+            ->withBride($bride)
+            ->withGroom($groom);
+
+
+
+    }
 
 
     public function edit($id)
@@ -174,7 +249,6 @@ class JobController extends Controller
         $job_types = JobType::all();
         $type = array();
         foreach ($job_types as $job_type )
-
             $type[$job_type->id] = $job_type->type;
         return view('jobs.edit')->withJob($job)->withJob_types($type);
         //or return view('job.edit')->with('job',$job);

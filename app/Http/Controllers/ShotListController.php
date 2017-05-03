@@ -103,7 +103,8 @@ class ShotListController extends Controller
 
         Session::flash('success', 'The Shot was successfully saved!');
 
-        return redirect()->route('shotList.index');
+//        return redirect()->route('shotList.index');
+        return Redirect::back();
     }
 
     /**

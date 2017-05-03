@@ -21,12 +21,12 @@
                         {{Form::label('howMuchTime','Number Of Hours Purchased:')}}
                         {{Form::text('howMuchTime', null, array('class'=> 'form-control'))}}
                         {{Form::label('jobDate','Ceremony Date:')}}
-                        {{Form::date('jobDate', '2017-03-12', array('class'=> 'form-control'))}}
+                        {{Form::date('jobDate', '', array('class'=> 'form-control'))}}
                         {{Form::label('ceremonytime','Ceremony Start Time:')}}
-                        {{Form::time('ceremonytime', '17:30', array('class'=> 'form-control'))}}
+                        {{Form::time('ceremonytime', '', array('class'=> 'form-control'))}}
 
                         {{Form::label('ceremonyendtime','Ceremony End Time:')}}
-                        {{Form::time('ceremonyendtime', '18:00', array('class'=> 'form-control'))}}
+                        {{Form::time('ceremonyendtime', '', array('class'=> 'form-control'))}}
                         {{Form::text('job_id', $job, array('class'=>'form-control'))}}
 
 
