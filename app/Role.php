@@ -19,4 +19,9 @@ class Role extends Model
 
         return $this->belongsToMany('App\Contact');
     }
+
+    public function default_contact(){
+
+        return $this->belongsToMany('App\Contact','default_roles', 'contact_id', 'role_id');
+    }
 }

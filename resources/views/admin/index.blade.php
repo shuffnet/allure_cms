@@ -11,6 +11,8 @@
     <a href="{{ route('shotList.index') }}" class="">Shot List</a><br/>
     <a href="{{ route('timelinegroup.index') }}" class="">Timeline Groups</a><br/>
     <a href="{{ route('session_type.index') }}">Session Types</a><br/>
+    <a href="{{ route('taskitem.index') }}">Task Items</a><br/>
+    <a href="{{ route('taskgroup.create') }}">Task Groups</a>
 
 
 

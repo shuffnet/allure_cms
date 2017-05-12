@@ -16,4 +16,13 @@ class TimelineGroup extends Model
 
 
         }
+
+    public function get_sessiontype(){
+
+        return $this->belongsToMany('App\Session_Type','sessiontype_taskgroup', 'session_type_id', 'taskgroup_id')
+            ->withPivot('id');
+
+
+
+    }
 }

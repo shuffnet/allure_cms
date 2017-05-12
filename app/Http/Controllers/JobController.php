@@ -51,7 +51,36 @@ class JobController extends Controller
         //
         $job_types = JobType::all();
         $roles = Role::all();
-        return view('jobs.create')->withJob_types($job_types)->withRoles($roles);
+        $custserve = Contact::whereHas('contact_type', function($q) {
+            $q->where('role', '=', 'Customer Service');
+        })->get();
+
+        $default_custserve = DB::table('default_roles')
+
+            ->where('role_id', '=', 6)
+            ->join('contacts','default_roles.contact_id' ,'=','contacts.id')
+            ->first();
+
+        $photogs = Contact::whereHas('contact_type', function($q) {
+            $q->where('role', '=', 'Lead photographer');
+        })->get();
+
+        $default_photog = DB::table('default_roles')
+
+            ->where('role_id', '=', 1)
+            ->join('contacts','default_roles.contact_id' ,'=','contacts.id')
+            ->first();
+
+
+
+
+        return view('jobs.create')
+            ->withJob_types($job_types)
+            ->withRoles($roles)
+            ->withCustserve($custserve)
+            ->withPhotogs($photogs)
+            ->withDefaultphotog($default_photog)
+            ->withDefaultcustserve($default_custserve);
 
     }
 
@@ -96,15 +125,29 @@ class JobController extends Controller
 
         $job->save();
 
-        foreach ($request->role as $roleid){
-            $role = $roleid;
-
-        }
+//        foreach ($request->role as $roleid){
+//            $role = $roleid;
+//
+//        }
         $roles = new Job_role;
         $roles->job_id = $job->id;
-        $roles->role_id = $role;
+        $roles->role_id = $request->role;
         $roles->contact_id = $contact->id;
         $roles->save();
+
+        $custserve = new Job_role;
+        $custserve->job_id = $job->id;
+        $custserve->role_id = 6;
+        $custserve->contact_id = $request->custserve;
+        $custserve->save();
+
+        $photog = new Job_role;
+        $photog->job_id = $job->id;
+        $photog->role_id = 1;
+        $photog->contact_id = $request->photog;
+        $photog->save();
+
+
 
         Session::flash('success', 'The Job was successfully saved!');
         return redirect()->route('jobs.show', $job->id);

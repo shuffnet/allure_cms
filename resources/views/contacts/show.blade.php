@@ -4,12 +4,14 @@
 
     <div class="row">
 
-        <div class="col col-md-8">
+        <div class="col col-md-7 col-md-offset-1">
             <p class="lead">{{$contact->fname}}</p>
             <p class="lead">{{$contact->lname}}</p>
             <p class="lead">{{$contact->email}}</p>
 
             <hr>
+            <div class="row"><h5>Roles:</h5></div>
+
             <div>
                 @foreach($contact->contact_type as $type)
 
@@ -19,7 +21,20 @@
                 @endforeach
 
 
+
+
             </div>
+            <hr>
+            <div>
+                <div class="row"><h5>Default Roles:</h5></div>
+                @foreach($contact->default_role as $default)
+
+                    <span class="label label-default">{{$default->role}}</span>
+
+
+                @endforeach
+            </div>
+            <hr>
 
 
 

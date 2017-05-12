@@ -114,40 +114,101 @@ else {
     </div> <!--End of Top column with job and edit-->
 
     <div class="row">
-        <div class="col col-md-4">
+        <div class="col col-md-2">
 
 
 
         </div>
         <div class="col col-md-4">
-            <h3>Session</h3>
+
             <div class="row">
 
                 <?php
                 $sessionDate = new Carbon($session->date);
                 $sessionDate = $sessionDate->format('l F jS \\  Y');
                 ?>
-                <h4>Date: {{$sessionDate}}</h4>
-                <h4>Time: {{(new Carbon($session->time))->format('g:i a')}}</h4>
-                <h4>Session: {{$session->get_type->type}}</h4>
-                <h4>Location: {{ ucfirst($session->location)}}</h4>
-                <h4>Photographer: {{ ucfirst($session->get_photographer->fname)}} {{ ucfirst($session->get_photographer->lname)}}</h4>
+                    <div class="row " style="background-color: lightgray"><h3 class="col-md-4 col-md-offset-4">Session</h3></div>
+
+
+                    <dl class="dl-horizontal">
+                        <dt>Date:</dt>
+                        <dd> {{$sessionDate}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Time:</dt>
+                        <dd>{{(new Carbon($session->time))->format('g:i a')}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Session:</dt>
+                        <dd>{{$session->get_type->type}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Location:</dt>
+                        <dd>{{ ucfirst($session->location)}}</dd>
+                    </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Photographer:</dt>
+                        <dd>{{ ucfirst($session->get_photographer->fname)}}</dd>
+                    </dl>
+
             </div>
 
 
         </div>
 
-
-
-
-
     </div>
-    @include('../partials.jobs._timeline')
+
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div id="btn_newTask" class=" col-md-1 btn btn-default">Add Task</div>
+
+        </div>
+    </nav>
+
+
+
+    <div class="col col-md-8 col-md-offset-2">
+        <div class="row">
+            <table class="table">
+                @foreach($session->get_task as $task)
+                    <?php
+                    $dueDate = $task->dueDate;
+                    $dueDateCarbon = new Carbon($dueDate);
+                    $dueDate =$dueDateCarbon->format('l F jS \\  Y');
+                    $now =  Carbon::now();
+                    $daysLeft = $dueDateCarbon->diffInDays($now);
+                    ?>
+
+                    <tr>
+                        <td><div class="btn btn-default btn-xs">Pin</div></td>
+                        <td><div class="btn btn-default btn-xs">Complete</div></td>
+                        <td>{{$task->status}}</td>
+                        <td><a href="">{{$task->task}}</a></td>
+                        <td>{{$dueDate}}</td>
+                        <td>{{$daysLeft}} Days Left</td>
+                        <td>{{$task->get_contact->fname}} {{$task->get_contact->lname}}</td>
+                        <td><a href="">Delete</a></td>
+                        <td><a href="">Edit</a></td>
+                    </tr>
+
+                @endforeach
+            </table>
+
+
+        </div>
+    </div>
+    @include('jobs.sessions.modal._new_task')
+
 @endsection
 @section('java')
 
+    <script>
+        $('#btn_newTask').on('click', function(){
+                $("#newTaskModal").modal("show");
+        });
 
-    @include('../../partials.js._timeline')
+    </script>
+
 
 
 

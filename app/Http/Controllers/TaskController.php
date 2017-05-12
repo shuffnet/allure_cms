@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Session_Type;
-use App\TaskGroup;
+use App\Task;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
-use Illuminate\Support\Facades\Redirect;
 
-class Session_Type_Controller extends Controller
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +18,6 @@ class Session_Type_Controller extends Controller
     public function index()
     {
         //
-        $types = Session_Type::all();
-        $groups = TaskGroup::all();
-        return view('session_type.index')
-            ->withGroups($groups)
-            ->withTypes($types);
     }
 
     /**
@@ -45,15 +39,54 @@ class Session_Type_Controller extends Controller
     public function store(Request $request)
     {
         //
-        $type = new Session_Type();
-        $type->type = $request->type;
-        $type->save();
-        if($request->taskgroup)
-        {
-            $type->get_taskgroup()->sync($request->taskgroup, false);
-        }
+        $task = New Task();
+        $task->job_id = $request->job_id;
+        $task->session_id = $request->session_id;
+        $task->task = $request->task;
+        $task->status = $request->status;
+        $task->contact_id = $request->contact_id;
+        $task->pinned = $request->pin;
+        $task->pin_reason = $request->pin_reason;
+        $task->notes = $request->notes;
+        $task->dueDateRules_id = $request->dueDateRules_id;
+        $task->dueDateRulesTime = $request->dueDateRulesTime;
+        $task->created_by = $request->created_by;
 
-        return redirect()->route('session_type.index');
+        $dueDate = $request->dueDate;
+        if ($dueDate){
+
+            $task->date = $request->dueDate;
+
+        }else{
+//            '1'=>'Days Before Session',
+//            '2'=>'Days After Session'
+            if ($request->dueDateRules_id == 1){
+                $dueDate = new Carbon($request->session_date);
+                $dueDate = $dueDate->subDays($request->dueDateRulesTime);
+                $task->dueDate = $dueDate;
+            }
+            if ($request->dueDateRules_id == 2){
+                $dueDate = new Carbon($request->session_date);
+                $dueDate = $dueDate->addDays($request->dueDateRulesTime);
+
+
+                $task->dueDate = $dueDate;
+
+
+            }
+
+//
+        }
+        $task->save();
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -66,12 +99,6 @@ class Session_Type_Controller extends Controller
     public function show($id)
     {
         //
-       $session_type = Session_Type::find($id);
-       $group = TaskGroup::all();
-       return view('session_type.show')
-           ->withType($session_type)
-           ->withGroups($group);
-
     }
 
     /**
@@ -95,15 +122,6 @@ class Session_Type_Controller extends Controller
     public function update(Request $request, $id)
     {
         //
-        $type = Session_Type::find($id);
-        $type->type = $request->type;
-        $type->save();
-        if($request->taskgroup)
-        {
-            $type->get_taskgroup()->sync($request->taskgroup);
-        }
-
-        return redirect()->route('session_type.index');
     }
 
     /**
@@ -115,10 +133,5 @@ class Session_Type_Controller extends Controller
     public function destroy($id)
     {
         //
-        $type = Session_Type::find($id);
-        $type->delete();
-        $type->get_taskgroup()->sync(array());
-        return Redirect::back();
-
     }
 }

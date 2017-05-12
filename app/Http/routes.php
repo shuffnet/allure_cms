@@ -78,6 +78,13 @@ Route::get('auth/logout', 'Auth\AuthController@logout');
 
 Route::get('auth/register', 'Auth\AuthController@getRegister');
 Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::resource('task', 'TaskController');
+
+Route::resource('taskitem', 'TaskItemController');
+Route::post('taskgroup/addtask' , ['uses'=>'TaskGroupController@addtask', 'as'=>'taskgroup.addtask']);
+Route::delete('taskgroup/destroytask/{id}', ['uses'=>'TaskGroupController@destroytask', 'as'=>'taskgroup.destroytask']);
+
+Route::resource('taskgroup', 'TaskGroupController');
 
 
 

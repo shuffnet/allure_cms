@@ -52,10 +52,14 @@ class JobSessionsController extends Controller
     public function createsession ($jobID, $photogID)
     {
         $session_types = Session_Type::all();
+        $photogs = Contact::whereHas('contact_type', function($q) {
+            $q->where('role', '=', 'Lead photographer');
+        })->get();
 
         return view('jobs.sessions.create')
             ->withJob($jobID)
             ->withLead($photogID)
+            ->withPhotogs($photogs)
             ->withSession_types($session_types)
 
 
@@ -87,6 +91,12 @@ class JobSessionsController extends Controller
             ->get();
         $session = Session::find($session_id);
 
+        $employees =DB::table('contact_role')
+
+            ->where('role_id', '=', 5)
+            ->join('contacts','contact_role.contact_id' ,'=','contacts.id')
+            ->get();
+
 //
 
         return view('jobs.sessions.show')
@@ -95,6 +105,7 @@ class JobSessionsController extends Controller
             ->withPhotogs($photogs)
             ->withLead($lead)
             ->withSession($session)
+            ->withEmployees($employees)
 
 //
             ;

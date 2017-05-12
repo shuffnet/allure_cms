@@ -28,6 +28,11 @@ class Contact extends Model
 
     }
 
+    public function default_role(){
+
+        return $this->belongsToMany('App\Role','default_roles', 'contact_id', 'role_id');
+    }
+
     public function get_sessions() {
         return $this->belongsTo('App\Session', 'contact_id');
     }

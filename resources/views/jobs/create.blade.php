@@ -8,7 +8,7 @@
             <hr>
             {!! Form::open(array('route' => 'jobs.store')) !!}
             {{--//create the client first--}}
-
+            {!! csrf_field() !!}
             {{Form::label('fname','First Name:')}}
             {{Form::text('fname', null, array('class'=> 'form-control'))}}
 
@@ -20,8 +20,8 @@
             {{Form::label('phone','Phone:')}}
             {{Form::text('phone', null, array('id'=>'cell-phone','class'=> 'form-control'))}}
 
-            {{Form::label('role','Roles:')}}
-            <select name='role[]'class=" form-control" >
+            {{Form::label('role','Role:')}}
+            <select name='role'class=" form-control" >
                 <option value="" disabled selected>Select Contact Role</option>
                 @foreach($roles as $role)
                     <option value="{{$role->id}}">{{$role->role}}</option>
@@ -45,6 +45,20 @@
             {{Form::text('name', null, array('class'=> 'form-control'))}}
             {{Form::label('description','Job Description:')}}
             {{Form::textarea('description', null, array('class'=> 'form-control'))}}
+            <label for="custserve">Customer Service Rep:</label>
+            <select name="custserve" id="" class="custserve form-control">
+                @foreach($custserve as $custserv)
+                    <option value="{{$custserv->id}}">{{$custserv->fname . " ".$custserv->lname}}</option>
+                @endforeach
+
+            </select>
+            <label for="photog">Default Photographer:</label>
+            <select name="photog" id="" class="photog form-control">
+                @foreach($photogs as $photog)
+                    <option value="{{$photog->id}}">{{$photog->fname . " ".$photog->lname}}</option>
+                @endforeach
+
+            </select>
             {{Form::submit('Save', array('class'=> 'btn btn-success btn-lg btn-block'))}}
             {!! Form::close() !!}
         </div>
@@ -56,8 +70,14 @@
 @section('java')
     {!! Html::script('js/jquery.maskedinput.min.js') !!}
 
+
     <script type="text/javascript">
 
+        $(".custserve").select2();
+        $(".custserve").val({!! json_encode($defaultcustserve->id)!!}).trigger('change');
+
+        $(".photog").select2();
+        $(".photog").val({!! json_encode($defaultphotog->id)!!}).trigger('change');
 
 
 

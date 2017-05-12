@@ -18,6 +18,11 @@ class Session extends Model
 
     }
 
+    public function get_task(){
+        return $this->hasMany('App\Task', 'session_id');
+    }
+
+
 
 
 

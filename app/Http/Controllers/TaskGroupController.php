@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Session_Type;
 use App\TaskGroup;
+
+use App\Taskgroup_taskitem;
+use App\TaskItem;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use Illuminate\Support\Facades\Redirect;
 
-class Session_Type_Controller extends Controller
+class TaskGroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,11 +21,8 @@ class Session_Type_Controller extends Controller
     public function index()
     {
         //
-        $types = Session_Type::all();
         $groups = TaskGroup::all();
-        return view('session_type.index')
-            ->withGroups($groups)
-            ->withTypes($types);
+        return view('taskgroup/create')->withGroups($groups);
     }
 
     /**
@@ -34,6 +33,8 @@ class Session_Type_Controller extends Controller
     public function create()
     {
         //
+        $groups = TaskGroup::all();
+        return view('taskgroup/create')->withGroups($groups);
     }
 
     /**
@@ -45,15 +46,10 @@ class Session_Type_Controller extends Controller
     public function store(Request $request)
     {
         //
-        $type = new Session_Type();
-        $type->type = $request->type;
-        $type->save();
-        if($request->taskgroup)
-        {
-            $type->get_taskgroup()->sync($request->taskgroup, false);
-        }
-
-        return redirect()->route('session_type.index');
+        $group = New TaskGroup();
+        $group->group = $request->group;
+        $group->save();
+        return redirect()->route('taskgroup.show', $group->id);
 
     }
 
@@ -66,11 +62,37 @@ class Session_Type_Controller extends Controller
     public function show($id)
     {
         //
-       $session_type = Session_Type::find($id);
-       $group = TaskGroup::all();
-       return view('session_type.show')
-           ->withType($session_type)
-           ->withGroups($group);
+        $group = TaskGroup::find($id);
+        $task = TaskItem::all();
+
+        return view('taskgroup/show')
+            ->withGroup($group)
+            ->withTasks($task);
+
+    }
+
+    public function addtask(Request $request)
+    {
+        $groupitem = new Taskgroup_taskitem();
+
+        $groupitem->taskgroup_id = $request->taskgroup_id;
+        $groupitem->taskitems_id = $request->taskitems_id;
+        $groupitem->save();
+
+
+        return Redirect::back();
+
+
+
+
+
+    }
+    public function destroytask($id)
+    {
+       $task = Taskgroup_taskitem::find($id);
+       $task->delete();
+        return Redirect::back();
+
 
     }
 
@@ -95,15 +117,6 @@ class Session_Type_Controller extends Controller
     public function update(Request $request, $id)
     {
         //
-        $type = Session_Type::find($id);
-        $type->type = $request->type;
-        $type->save();
-        if($request->taskgroup)
-        {
-            $type->get_taskgroup()->sync($request->taskgroup);
-        }
-
-        return redirect()->route('session_type.index');
     }
 
     /**
@@ -115,10 +128,8 @@ class Session_Type_Controller extends Controller
     public function destroy($id)
     {
         //
-        $type = Session_Type::find($id);
-        $type->delete();
-        $type->get_taskgroup()->sync(array());
-        return Redirect::back();
-
+        $group = TaskGroup::find($id);
+        $group->delete();
+        return redirect()->route('taskgroup.create');
     }
 }

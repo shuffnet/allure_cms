@@ -65,6 +65,7 @@ class ContactController extends Controller
 
         $contact->save();
         $contact->contact_type()->sync($request->contact_role, false);
+        $contact->default_role()->sync($request->default_role, false);
 
         Session::flash('success', 'The Contact was successfully saved!');
         return redirect()->route('contacts.show', $contact->id);
@@ -103,10 +104,10 @@ class ContactController extends Controller
     {
         //
         $contact = Contact::find($id);
-        $contact_types = Contact_Type::all();
+        $contact_types = Role::all();
         $contact_type = array();
         foreach ($contact_types as $type){
-            $contact_type[$type->id] = $type->type;
+            $contact_type[$type->id] = $type->role;
 
         }
 
@@ -146,9 +147,18 @@ class ContactController extends Controller
 
             $contact->contact_type()->sync($request->contact_type);
 
-        } else{
+        }
+        else{
 
            $contact->contact_type()->sync(array());
+        }
+        if (isset($request->default_role)){
+
+            $contact->default_role()->sync($request->default_role);
+        }
+        else{
+
+            $contact->default_role()->sync(array());
         }
 
         return redirect()->route('contacts.show', $contact->id);
