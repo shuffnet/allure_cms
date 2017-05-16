@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Default_config;
 use App\Job;
 use App\Session;
 use App\Session_Type;
@@ -52,15 +53,24 @@ class JobSessionsController extends Controller
     public function createsession ($jobID, $photogID)
     {
         $session_types = Session_Type::all();
+
+        $config = Default_config::first();
+
         $photogs = Contact::whereHas('contact_type', function($q) {
             $q->where('role', '=', 'Lead photographer');
         })->get();
+
+
+
+
 
         return view('jobs.sessions.create')
             ->withJob($jobID)
             ->withLead($photogID)
             ->withPhotogs($photogs)
             ->withSession_types($session_types)
+            ->withConfig($config)
+
 
 
 

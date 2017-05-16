@@ -8,7 +8,7 @@
             <hr>
             {!! Form::open(array('route' => 'session.store')) !!}
 
-            <select name="session_type_id"  class="form-control">
+            <select name="session_type_id" id="session_type"  class="form-control">
                 <option value="" disabled selected>Select Session Type</option>
                 @foreach($session_types as $session_type)
                     <option value="{{$session_type->id}}">{{$session_type->type}}</option>
@@ -17,7 +17,7 @@
             </select>
 
             {{Form::label('date','Session Date:')}}
-            {{Form::date('date', null, array('class'=> ''))}}
+            {{Form::date('date', null, array('id'=>'datepicker','class'=> ''))}}
             {{Form::label('time','Session Time:')}}
             {{Form::time('time', null, array('class'=> ''))}}
 
@@ -41,9 +41,7 @@
 
 
 
-            {{Form::checkbox('confirmed','', array('class'=> 'form-control'))}}
-            {{Form::label('imagepath','Image Path:',array('class'=> 'form-control'))}}
-            {{Form::text('imagepath', null, array('class'=> 'form-control'))}}
+
 
             {{Form::submit('Save', array('class'=> 'btn btn-success btn-lg btn-block'))}}
             {!! Form::close() !!}

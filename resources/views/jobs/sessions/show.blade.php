@@ -119,7 +119,7 @@ else {
 
 
         </div>
-        <div class="col col-md-4">
+        <div class="col col-md-6">
 
             <div class="row">
 
@@ -150,6 +150,24 @@ else {
                         <dt>Photographer:</dt>
                         <dd>{{ ucfirst($session->get_photographer->fname)}}</dd>
                     </dl>
+                    <dl class="dl-horizontal">
+                        <dt>Folder Name:</dt>
+                        @php
+                        $sessiontype = $session->imagepath;
+                       $sessiontype = str_replace (" ", "-", $sessiontype);
+
+                        @endphp
+                        <dd>  <input id="foo" class="form-control" value="{{$sessiontype}}">
+
+
+                            <button class="clipboard" data-clipboard-target="#foo">
+                                Copy
+                            </button></dd>
+
+                    </dl>
+
+
+
 
             </div>
 
@@ -206,6 +224,19 @@ else {
         $('#btn_newTask').on('click', function(){
                 $("#newTaskModal").modal("show");
         });
+
+
+        new Clipboard('.clipboard');
+        clipboard.destroy();
+
+
+
+
+
+
+
+
+
 
     </script>
 

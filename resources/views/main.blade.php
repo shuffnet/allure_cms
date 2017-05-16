@@ -19,11 +19,11 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.13/css/jquery.dataTables.min.css">
-
+    <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.0/clipboard.min.js"></script>
 
     <link href="https://fonts.googleapis.com/css?family=Jura:300" rel="stylesheet">
 
-    <link href="/public/css/style.css" media="all" rel="stylesheet" type="text/css" />
+    <link href="/resource/assets/css/style.css" media="all" rel="stylesheet" type="text/css" />
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -62,17 +62,7 @@
 
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Account <span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                        @if (Auth::check())
 
-                        <li><a href="/auth/logout">Log Out</a></li>
-                            @else
-                            <li><a href="/auth/login">Log In</a></li>
-                         @endif
-
-                        <li role="separator" class="divider"></li>
-                        <li><a href="/auth/register">Register</a></li>
-                    </ul>
                 </li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -81,7 +71,7 @@
 <div class="container-fluid">
 
     @include('partials._message')
-       {{Auth::check()? "Logged In As: ". Auth::user()->email : "Logged Out"}}
+
 
 
    @yield('content')

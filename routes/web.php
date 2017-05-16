@@ -2,15 +2,22 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register all of the routes for an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
 |
 */
 
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('contact', 'PagesController@getContact');
 
 Route::get('about', 'PagesController@getAbout');
@@ -68,16 +75,6 @@ Route::get('jobs/sessions/{jobID}/{sessionID}/show' , ['uses'=>'JobSessionsContr
 
 Route::get('jobs/sessions/create/{jobID}/{photogID}' , ['uses'=>'JobSessionsController@createsession', 'as' => 'jobsSessions.create']);
 
-//Athentication
-
-Route::get('auth/login', 'Auth\AuthController@getLogin');
-Route::post('auth/login', 'Auth\AuthController@postLogin');
-Route::get('auth/logout', 'Auth\AuthController@logout');
-
-//Registration
-
-Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
 Route::resource('task', 'TaskController');
 
 Route::resource('taskitem', 'TaskItemController');
@@ -85,17 +82,8 @@ Route::post('taskgroup/addtask' , ['uses'=>'TaskGroupController@addtask', 'as'=>
 Route::delete('taskgroup/destroytask/{id}', ['uses'=>'TaskGroupController@destroytask', 'as'=>'taskgroup.destroytask']);
 
 Route::resource('taskgroup', 'TaskGroupController');
+Route::resource('config', 'ConfigController');
 
+Auth::routes();
 
-
-
-
-
-
-
-
-
-
-
-
-
+Route::get('/home', 'HomeController@index');

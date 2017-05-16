@@ -39,9 +39,9 @@
     <script type="text/javascript">
 
         $(".js-example-basic-multiple").select2();
-        $(".js-example-basic-multiple").val({!! json_encode( $contact->contact_type()->getRelatedIds()) !!}).trigger('change');
+        $(".js-example-basic-multiple").val({!! json_encode( $contact->contact_type()->allRelatedIds()) !!}).trigger('change');
         $(".default-role").select2();
-        $(".default-role").val({!! json_encode( $contact->default_role()->getRelatedIds()) !!}).trigger('change');
+        $(".default-role").val({!! json_encode( $contact->default_role()->allRelatedIds()) !!}).trigger('change');
 
     </script>
 @endsection

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Default_config;
 use App\Session;
 use App\Session_Type;
 use App\Task;
@@ -33,7 +34,7 @@ class SessionController extends Controller
     public function create()
     {
         //
-        return view('/sessions/create');
+
     }
 
     /**
@@ -52,9 +53,20 @@ class SessionController extends Controller
         $session->notes = $request->notes;
         $session->photographer_id = $request->photographer_id;
         $session->location = $request->location;
-        $session->confirmed = $request->confirmed;
-        $session->imagepath = $request->imagepath;
+
         $session->job_id = $request->job_id;
+
+            $customer = DB::table('job_role')
+                ->where('job_id', '=', $request->job_id)
+                ->where('role_id', '=', 2)
+                ->join('contacts','job_role.contact_id' ,'=','contacts.id')
+                ->first();
+
+        $sessiontype = Session_type::find($request->session_type_id);
+
+        $session->imagepath = $customer->fname.'_'.$customer->lname.'_'.$sessiontype->type.'_'.$request->date;
+
+
         $session->save();
         $sessiontype = Session_Type::find($session->session_type_id);
 
